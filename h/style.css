@@ -1,0 +1,232 @@
+
+#upgrade{
+    background-color: #EEEEEE;
+    position:absolute;
+    right:-40px;
+    top:0px;
+    width:50px;
+    z-index:-1;
+    border-radius:7px; 
+    box-shadow: 1px 1px 0px  grey;
+    transition: 1s ease-in-out;
+    
+}
+
+#upgrade:hover{
+    
+    right:-430px;
+    
+}
+
+
+#upgrade p{
+    margin-top:auto;
+    margin-bottom:auto;
+    margin-left:17px;
+    margin-right:auto;
+    color:black;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+
+#upscreen{
+    height:200px;
+    width:400px;
+    background-color:#EEEEEE;
+    box-shadow: 0px 1px 0px  grey;
+    position:absolute;
+    left:-390px;
+    top:0px;
+    border-radius:7px; 
+}
+
+body{background-color:#FF0000}
+#main{background-color:#00FF00}
+#slide{background-color:#000000;z-index:1;}
+header{background-color:#FFFF00}
+.mspfalogo{background-color:#FFFF00;border-color:#00FFFF}
+.umcontainer{background-color:#FFFF00}
+.um{background-color:#99FF99}
+#command{background-color:#7472FF !important; color:#FFFFFF}
+#content{background-color:#FFFFFF;overflow:hidden}
+ 
+html{filter: invert(0%);}
+ 
+nav {
+ 
+}
+nav a:nth-child(1) {
+ 
+font-size:0em;
+text-decoration:none;
+ 
+}
+nav a:nth-child(1):after {
+  content:"INICIO";
+    font-size: x-small;
+vertical-align:middle;
+text-align:center;
+text-decoration:underline;
+}
+ 
+
+ 
+ 
+nav a:nth-child(3) {
+ 
+font-size:0em;
+ text-decoration:none;
+}
+nav a:nth-child(3):after {
+  content:"MSPA";
+    font-size: x-small;
+vertical-align:middle;
+text-align:center;
+text-decoration:underline;
+}
+ 
+nav a:nth-child(5) {
+ 
+font-size:0em;
+ text-decoration:none;
+}
+nav a:nth-child(5):after {
+  content:"EXPLORAR";
+    font-size: x-small;
+vertical-align:middle;
+text-align:center;
+text-decoration:underline;
+}
+ 
+nav a:nth-child(7) {
+ 
+font-size:0em;
+ text-decoration:none;
+}
+nav a:nth-child(7):after {
+  content:"ALEATORIO";
+    font-size: x-small;
+vertical-align:middle;
+text-align:center;
+text-decoration:underline;
+}
+ 
+nav a:nth-child(9) {
+ 
+font-size:0em;
+ text-decoration:none;
+}
+nav a:nth-child(9):after {
+  content:"ESTADÍSTICAS";
+    font-size: x-small;
+vertical-align:middle;
+text-align:center;
+text-decoration:underline;
+}
+ 
+nav a:nth-child(11) {
+ 
+font-size:0em;
+ text-decoration:none;
+}
+nav a:nth-child(11):after {
+  content:"REGISTRO";
+    font-size: x-small;
+vertical-align:middle;
+text-align:center;
+text-decoration:underline;
+}
+ 
+
+ 
+nav a:nth-child(13) {
+ 
+font-size:0em;
+ text-decoration:none;
+}
+nav a:nth-child(13):after {
+  content:"BUSCAR";
+    font-size: x-small;
+vertical-align:middle;
+text-align:center;
+text-decoration:underline;
+}
+ 
+nav a:nth-child(15) {
+ 
+font-size:0em;
+text-decoration:none; 
+}
+nav a:nth-child(15):after {
+  content:"MI MSPFA";
+    font-size: x-small;
+vertical-align:middle;
+text-align:center;
+text-decoration:underline;
+}
+ 
+nav a:nth-last-child(3) {
+ 
+font-size:0em;
+text-decoration:none; 
+}
+nav a:nth-last-child(3):after {
+  content:"CONTACTO";
+    font-size: x-small;
+vertical-align:middle;
+text-align:center;
+text-decoration:underline;
+}
+ 
+ 
+nav a:nth-last-child(1) {
+ 
+font-size:0em;
+text-decoration:none; 
+}
+nav a:nth-last-child(1):after {
+  content:"DONAR";
+    font-size: x-small;
+vertical-align:middle;
+text-align:center;
+text-decoration:underline;
+}
+
+a#savegame {
+  font-size: 0em;
+}
+ 
+a#savegame:after {
+  content: 'Guardar partida';
+  font-size: 11px;
+}
+
+a#loadgame {
+  font-size: 0em;
+}
+ 
+a#loadgame:after {
+  content: 'Cargar partida';
+  font-size: 11px;
+}
+
+a#deletegame {
+  font-size: 0em;
+}
+ 
+a#deletegame:after {
+  content: 'Borrar datos de la partida';
+  font-size: 11px;
+}
+
+#container{
+background-color:#0000ff;
+    position:relative;
+    z-index:0;
+    
+}
+
+#foot a:link{color:white}
+
+#foot a:visited{color:red}
