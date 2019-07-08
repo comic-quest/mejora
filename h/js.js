@@ -43,6 +43,14 @@ var upScreen= document.createElement("div");
 upScreen.id="upscreen";
     
 var upFrame = document.createElement("iframe");
+    
+    upFrame.src = "https://comic-quest.github.io/mejora/";
+    
+    upFrame.width = 400;
+    
+    upFrame.height = 200;
+    
+    upScreen.appendChild(upFrame);
 
 
 
