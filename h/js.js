@@ -41,6 +41,8 @@ slide.appendChild(upgrade);
 
 var upScreen= document.createElement("div");
 upScreen.id="upscreen";
+    
+var upFrame = document.createElement("iframe");
 
 
 
