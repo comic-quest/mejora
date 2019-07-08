@@ -50,6 +50,8 @@ var upFrame = document.createElement("iframe");
     
     upFrame.height = 200;
     
+    upFrame.id="upFrame";
+    
     upScreen.appendChild(upFrame);
 
 

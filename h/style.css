@@ -1,4 +1,8 @@
 
+#upFrame{
+    overflow:hidden;
+}
+
 #upgrade{
     background-color: #EEEEEE;
     position:absolute;
