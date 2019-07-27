@@ -47,7 +47,7 @@ ctx.fillRect(0,0,canvas.width,canvas.height);
             ctx.translate(e.movementX,e.movementY)
             
             drawScene();
-            
+            console.log(camara)
         }
         
         
@@ -82,7 +82,16 @@ ctx.fillRect(0,0,canvas.width,canvas.height);
     function drawScene(){
     //ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.fillStyle="black";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillRect(-camara.x,-camara.y,canvas.width,canvas.height);
+        ctx.lineWidth=5;
+        ctx.strokeStyle="white";
+        ctx.beginPath();
+        ctx.moveTo(232,100);
+        ctx.lineTo(262,100);
+        ctx.lineTo(262,62);
+        ctx.lineTo(300,62);
+        ctx.stroke();
+        
     ctx.drawImage(mejora,canvas.width/2-mejora.width/2+32,canvas.height/2-mejora.height/2+32,64,64); //todo esto para dibujarlo en el centro,yare yare
     
     ctx.drawImage(mejora,300,30,64,64)
