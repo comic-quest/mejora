@@ -113,6 +113,7 @@ var loadedimages=0;
                
                
            }
+        camara.movedWhileDragging = false;
         
         
     })
