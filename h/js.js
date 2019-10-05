@@ -67,7 +67,9 @@ function receiveMessage(event) {
   if (!event.origin.includes("https://comic-quest.github.io"))
     return;
     
-    
+    if(event.data==="upgraded"){
+       links.style.visibility="visible"
+       }
 
 }
 

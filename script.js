@@ -1,5 +1,6 @@
 window.addEventListener("load",function(){
     
+ 
     var mouseOn;
     
     function checkCollision(upg,x,y){//-----
@@ -47,21 +48,122 @@ var loadedimages=0;
     
         loadedimages+=1;
         if(loadedimages===images){
-           drawScene();
+           
            initializeEvents();
             
            }
         
     }
+    
 
     mejora.src = "mejora.jpg";
     
-    new Upgrade(canvas.width/2,canvas.height/2,30,30,mejora);
+       function Upgrade(properties){//
+       
+       this.x = properties.x;
+       this.y = properties.y;
+       this.w = properties.w;
+       this.h = properties.h;
+       this.img = properties.img;
+           this.lineWidth=properties.lineWidth;
+           this.unlocked = properties.unlocked;
+           this.length = properties.length;
+       this.realX = this.x-this.w/2;
+       this.realY = this.y-this.h/2;
+       this.click = function(){
+           if(window.parent){
+              window.parent.postMessage("upgraded","*")
+              }
+           
+       }
+       
+       if(properties.draw){
+           this.draw = properties.draw;
+       }else{
+           this.draw = function(){
+               
+               ctx.drawImage(this.img,0,0,this.w,this.h);
+               
+           }
+       }
+       
+       
+       
+           this.children=[]
+       mejoras.push(this);
+       
+   }//
     
-     new Upgrade(400,200,40,40,mejora);
+   var CQ = new Upgrade({x:canvas.width/2,
+                         y:canvas.height/2,
+                         w:80,
+                         h:80,
+                         img:mejora,
+                         length:90,
+                         lineWidth:4,
+                        unlocked:true});
+    
+    pushUpgrade(CQ,new Upgrade({x:120,
+                         y:70,
+                         w:40,
+                         h:40,
+                         img:mejora,
+                        length:0,
+                         lineWidth:3,
+                            unlocked:false}),true)
+    
+  
+    
+    pushUpgrade(CQ,new Upgrade({x:-140,
+                         y:100,
+                         w:40,
+                         h:40,
+                         img:mejora,
+                        length:0,
+                         lineWidth:3,
+                            unlocked:false}),true)
+    
+      pushUpgrade(CQ,new Upgrade({x:-120,
+                         y:-80,
+                         w:40,
+                         h:40,
+                         img:mejora,
+                        length:0,
+                         lineWidth:3,
+                            unlocked:true}),true)
+    
+          pushUpgrade(CQ,new Upgrade({x:-120,
+                         y:0,
+                         w:40,
+                         h:40,
+                         img:mejora,
+                        length:0,
+                         lineWidth:3,
+                            unlocked:true}),true)
+    
+              
+   
+   function pushUpgrade(parent,child,relative){
+       
+       parent.children.push(child);
+       if(relative){
+          relativePos(parent,child,child.x,child.y) 
+       }
+       
+   }
+    function relativePos(parent,child,x,y){
+        
+        child.x = parent.x+x;
+        child.y = parent.y+y;
+        child.realX = child.x-child.w/2;
+        child.realY = child.y-child.h/2;
+    }
+
+   
+    
 
     function initializeEvents(){
-        
+        drawScene();
          canvas.addEventListener("mousedown",function(e){
         
             camara.dragging=true;
@@ -170,33 +272,7 @@ var loadedimages=0;
 //testCtx.fillStyle="white";
 //testCtx.fillRect(0,0,75,75);
     
-   function Upgrade(x,y,w,h,img,draw){
-       
-       this.x = x;
-       this.y = y;
-       this.w = w;
-       this.h = h;
-       this.img = img;
-       this.realX = x-w/2;
-       this.realY = y-h/2;
-       this.click = function(){
-           if(window.parent){
-              window.parent.postMessage("upgraded","*")
-              }
-           
-       }
-       
-       if(draw){
-           this.draw = draw;
-       }else{
-           this.draw = function(){
-               
-               ctx.drawImage(img,0,0,w,h);
-               
-           }
-       }
-       mejoras.push(this)
-   }
+
     
     
     
@@ -205,31 +281,78 @@ var loadedimages=0;
    
 
     function drawScene(){
+        
     //ctx.clearRect(0,0,canvas.width,canvas.height);
+        console.log("here")
+        ctx.filter=""
     ctx.fillStyle="black";
     ctx.fillRect(-camara.x,-camara.y,canvas.width,canvas.height);
-        ctx.lineWidth=4.5;
+
+        
+        recursiveDraw(CQ,true)
+    
+        
+    }
+
+    function recursiveDraw(upg,unlock){
+        ctx.lineCap="square"
+        
+        
+        
+        for(var i = 0;i<upg.children.length;i++){
+            
+            ctx.lineWidth=upg.lineWidth;
+            if(upg.children[i].unlocked){
+               ctx.filter="brightness(100%)"
+               }else{
+                   ctx.filter="brightness(50%)" 
+               }
+            
+            if(upg.x>=upg.children[i].x){
+               var lineX = upg.x-upg.length;
+               }else{
+                   var lineX = upg.x+upg.length;
+               }
+            
+        var lineY = upg.y;
         ctx.strokeStyle="white";
         ctx.beginPath();
-        ctx.moveTo(232,100);
-        ctx.lineTo(262,100);
-        ctx.lineTo(262,62);
-        ctx.lineTo(300,62);
+        ctx.moveTo(upg.x,upg.y);
+        
+        ctx.lineTo(lineX,lineY);
+        
+        ctx.lineWidth=upg.lineWidth;
         ctx.stroke();
-        
-    for(var i = 0;i<mejoras.length;i++){
-
-        ctx.translate((mejoras[i].x-mejoras[i].w/2),(mejoras[i].y-mejoras[i].h/2));
-
-        mejoras[i].draw();
-        
-        ctx.translate(-(mejoras[i].x-mejoras[i].w/2),-(mejoras[i].y-mejoras[i].h/2));
-       
-        
-    }
+            
+            
+        ctx.beginPath();
+            ctx.moveTo(lineX,lineY)
+            ctx.lineTo(lineX,upg.children[i].y);
+            ctx.lineTo(upg.children[i].x,upg.children[i].y);
+            ctx.stroke();
+       recursiveDraw(upg.children[i],upg.children[i].unlocked);
         
     }
-
+   drawUpgrade(upg,unlock)
+        
+        
+    }
+    
+    function drawUpgrade(upg,unlock){
+        
+        if(unlock===true){
+           ctx.filter="opacity(100%)";
+           }else{
+                ctx.filter="brightness(50%)"    
+           }
+        console.log(ctx.filter,unlock)
+        ctx.translate((upg.x-upg.w/2),(upg.y-upg.h/2));
+                
+        upg.draw();
+        
+        ctx.translate(-(upg.x-upg.w/2),-(upg.y-upg.h/2));
+        
+    }
 
 
     
