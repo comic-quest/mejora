@@ -1,6 +1,6 @@
 
 #upFrame{
-    
+    overflow:hidden;
 }
 
 #upgrade{
@@ -12,7 +12,7 @@
     z-index:-1;
     border-radius:7px; 
     box-shadow: 1px 1px 0px  grey;
-    transition: 1s ease-in-out;
+    transition: 1s;
     
 }
 
@@ -21,9 +21,21 @@
     right:-500px;
     
 }
-#upgrade:hover #upscreen{
+#upgrade:hover ~ #upscreen{
     
-    height:400px;
+    right:-500px;
+    
+}
+#upscreen:hover{
+    
+    right:-500px;
+    
+}
+
+#upscreen:hover ~ #upgrade{
+    
+    right:-500px;
+    background-color:red;
     
 }
 
@@ -40,22 +52,21 @@
 
 
 #upscreen{
-    height:0;
+    height:0px;
     width:500px;
     background-color:#EEEEEE;
-    box-shadow: 0px 1px 0px  grey;
     position:absolute;
-    right:50px;
+    right:0px;
     top:0px;
     border-radius:7px;
     z-index:0;
-    overflow:hidden;
-    transition:0.5s;
+    transition:1s;
 }
+
 
 body{background-color:#FF0000}
 #main{background-color:#00FF00}
-#slide{background-color:#000000;z-index:1;}
+#slide{background-color:#000000;z-index:1;position:relative}
 header{background-color:#FFFF00}
 .mspfalogo{background-color:#FFFF00;border-color:#00FFFF}
 .umcontainer{background-color:#FFFF00}

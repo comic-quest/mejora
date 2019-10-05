@@ -3,7 +3,7 @@
     if (document.readyState === "complete") { code(); }
     else{
     
-        window.addEventListener("load",code)
+        document.onload = code; 
     }
     
 
@@ -24,7 +24,7 @@ var command = document.getElementById("command")
 
 var height = command.offsetHeight;
 
-var links = document.getElementById("links");
+
 
 var upgrade = document.createElement("div");
 
@@ -53,23 +53,12 @@ var upFrame = document.createElement("iframe");
     upFrame.id="upFrame";
     
     upScreen.appendChild(upFrame);
-    
 
 
 
-upgrade.appendChild(upScreen);
-    
-    links.style.visibility="hidden";
+slide.appendChild(upScreen);
 
-window.addEventListener("message", receiveMessage, false);
 
-function receiveMessage(event) {
-  if (!event.origin.includes("https://comic-quest.github.io"))
-    return;
-    
-    
-
-}
 
     
     }

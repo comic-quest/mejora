@@ -128,7 +128,6 @@ var loadedimages=0;
             //check collision
             
             if(checkCollision(mejoras[i],x,y)){
-                console.log("collision detected ",mejoras[i])
                 mouseOn = mejoras[i]
                 canvas.style.cursor = "pointer";
                 on = true;
@@ -181,7 +180,10 @@ var loadedimages=0;
        this.realX = x-w/2;
        this.realY = y-h/2;
        this.click = function(){
-           console.log("honk")
+           if(window.parent){
+              window.parent.postMessage("upgraded","*")
+              }
+           
        }
        
        if(draw){
@@ -216,15 +218,13 @@ var loadedimages=0;
         ctx.stroke();
         
     for(var i = 0;i<mejoras.length;i++){
-        console.log(mejoras[i])
-        console.log(ctx.currentTransform)
+
         ctx.translate((mejoras[i].x-mejoras[i].w/2),(mejoras[i].y-mejoras[i].h/2));
-        console.log(ctx.currentTransform,"2")
+
         mejoras[i].draw();
         
         ctx.translate(-(mejoras[i].x-mejoras[i].w/2),-(mejoras[i].y-mejoras[i].h/2));
-        console.log(ctx)
-        
+       
         
     }
         
