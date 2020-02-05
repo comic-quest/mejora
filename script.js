@@ -1,7 +1,35 @@
+if ( !window.requestAnimationFrame ) {
+
+	window.requestAnimationFrame = ( function() {
+
+		return window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame ||
+		window.oRequestAnimationFrame ||
+		window.msRequestAnimationFrame ||
+		function( /* function FrameRequestCallback */ callback, /* DOMElement Element */ element ) {
+
+			window.setTimeout( callback, 1000 / 60 );
+
+		};
+
+	} )();
+
+}
+
+
 window.addEventListener("load",function(){
     
+    var startTime = new Date();
+    
+    var now = new Date();
+    
+    var time = 0;
  
     var mouseOn;
+    
+    var sin = 0;
+    
+    var moveMultiplier = 3;
     
     function checkCollision(upg,x,y){//-----
 
@@ -96,23 +124,119 @@ var loadedimages=0;
     
    var CQ = new Upgrade({x:canvas.width/2,
                          y:canvas.height/2,
-                         w:80,
-                         h:80,
+                         w:50,
+                         h:50,
                          img:mejora,
-                         length:90,
-                         lineWidth:4,
+                         length:70,
+                         lineWidth:2,
                         unlocked:true});
     
-    pushUpgrade(CQ,new Upgrade({x:120,
-                         y:70,
+    pushUpgrade(CQ,new Upgrade({ //S
+                         x:-100,
+                         y:0,
                          w:40,
                          h:40,
                          img:mejora,
-                        length:0,
-                         lineWidth:3,
-                            unlocked:false}),true)
+                        length:50,
+                         lineWidth:2,
+                            unlocked:true}),true)
     
-  
+        pushUpgrade(CQ,new Upgrade({ //P
+                         x:-100,
+                         y:-100,
+                         w:40,
+                         h:40,
+                         img:mejora,
+                        length:40,
+                         lineWidth:2,
+                            unlocked:true}),true)
+    
+    
+    
+    
+    
+    
+        pushUpgrade(CQ,new Upgrade({ //COM
+                         x:-100,
+                         y:70,
+                         w:40,
+                         h:20,
+                         img:mejora,
+                        length:50,
+                         lineWidth:2,
+                            unlocked:true}),true)
+    
+            pushUpgrade(CQ.children[2],new Upgrade({ //CM
+                         x:-200,
+                         y:70,
+                         w:40,
+                         h:20,
+                         img:mejora,
+                        length:40,
+                         lineWidth:2,
+                            unlocked:true}),true)
+    
+    pushUpgrade(CQ.children[2],new Upgrade({ //OBJ
+                         x:-200,
+                         y:-10,
+                         w:40,
+                         h:20,
+                         img:mejora,
+                        length:40,
+                         lineWidth:2,
+                            unlocked:true}),true)
+    
+        pushUpgrade(CQ.children[2],new Upgrade({ //LV
+                         x:-150,
+                         y:25,
+                         w:40,
+                         h:20,
+                         img:mejora,
+                        length:40,
+                         lineWidth:2,
+                            unlocked:true}),true)
+    
+    pushUpgrade(CQ.children[0],new Upgrade({ //ST
+                         x:-110,
+                         y:-30,
+                         w:40,
+                         h:40,
+                         img:mejora,
+                        length:20,
+                         lineWidth:2,
+                            unlocked:true}),true)
+    
+        pushUpgrade(CQ.children[0],new Upgrade({ //T
+                         x:-85,
+                         y:10,
+                         w:30,
+                         h:30,
+                         img:mejora,
+                        length:20,
+                         lineWidth:2,
+                            unlocked:true}),true)
+    
+        pushUpgrade(CQ.children[1],new Upgrade({ //PN
+                         x:-70,
+                         y:40,
+                         w:30,
+                         h:30,
+                         img:mejora,
+                        length:20,
+                         lineWidth:2,
+                            unlocked:true}),true)
+    
+        pushUpgrade(CQ.children[1],new Upgrade({ //PS
+                         x:-70,
+                         y:-40,
+                         w:30,
+                         h:30,
+                         img:mejora,
+                        length:20,
+                         lineWidth:2,
+                            unlocked:true}),true)
+    
+  /*
     
     pushUpgrade(CQ,new Upgrade({x:-140,
                          y:100,
@@ -129,7 +253,7 @@ var loadedimages=0;
                          h:40,
                          img:mejora,
                         length:0,
-                         lineWidth:3,
+                         lineWidth:2,
                             unlocked:true}),true)
     
           pushUpgrade(CQ,new Upgrade({x:-120,
@@ -138,10 +262,37 @@ var loadedimages=0;
                          h:40,
                          img:mejora,
                         length:0,
-                         lineWidth:3,
+                         lineWidth:2,
                             unlocked:true}),true)
     
-              
+              pushUpgrade(CQ,new Upgrade({x:0,
+                         y:100,
+                         w:40,
+                         h:40,
+                         img:mejora,
+                        length:0,
+                         lineWidth:2,
+                            unlocked:false}),true)
+            pushUpgrade(CQ.children[CQ.children.length-1],new Upgrade({x:40,
+                         y:50,
+                         w:40,
+                         h:40,
+                         img:mejora,
+                        length:0,
+                         lineWidth:2,
+                            unlocked:true}),true)
+    
+    pushUpgrade(CQ.children[CQ.children.length-1],new Upgrade({x:-100,
+                         y:50,
+                         w:40,
+                         h:40,
+                         img:mejora,
+                        length:0,
+                         lineWidth:2,
+                            unlocked:true}),true)
+                
+    
+              */
    
    function pushUpgrade(parent,child,relative){
        
@@ -163,7 +314,8 @@ var loadedimages=0;
     
 
     function initializeEvents(){
-        drawScene();
+
+        requestAnimationFrame(drawScene);
          canvas.addEventListener("mousedown",function(e){
         
             camara.dragging=true;
@@ -223,9 +375,23 @@ var loadedimages=0;
         
     canvas.addEventListener("mousemove",function(e){
         
-        var x = e.offsetX-camara.x;
-            var y = e.offsetY-camara.y;
+        
         var on = false;
+        
+        if(camara.dragging){
+            camara.movedWhileDragging = true;
+            camara.x+= e.movementX;
+            camara.y+= e.movementY;
+            canvas.style.cursor = "grabbing";
+            ctx.translate(e.movementX,e.movementY)
+            
+            
+       
+        }else{
+            
+            var x = e.offsetX-camara.x;
+            var y = e.offsetY-camara.y;
+        
         for(var i = 0;i<mejoras.length;i++){
             //check collision
             
@@ -240,19 +406,13 @@ var loadedimages=0;
                }
             
         }
-        
-        if(!on){
+            if(!on){
+                if(canvas.style.cursor==="grabbing")return
+                   
+                   
            canvas.style.cursor = "default";
            }
-        if(camara.dragging){
-            camara.movedWhileDragging = true;
-            camara.x+= e.movementX;
-            camara.y+= e.movementY;
-            canvas.style.cursor = "grabbing";
-            ctx.translate(e.movementX,e.movementY)
             
-            drawScene();
-       
         }
         
         
@@ -281,6 +441,12 @@ var loadedimages=0;
    
 
     function drawScene(){
+        requestAnimationFrame(drawScene);
+        
+        now = new Date();
+        time = now.getTime()-startTime.getTime();
+        sin = Math.sin(time/200);
+        
         
     //ctx.clearRect(0,0,canvas.width,canvas.height);
         console.log("here")
@@ -298,27 +464,51 @@ var loadedimages=0;
         ctx.lineCap="square"
         
         
-        
         for(var i = 0;i<upg.children.length;i++){
             
+                        var ulock;
+            if(unlock){
+               ulock=true;
+                if(!upg.children[i].unlocked){
+                   ulock=false;
+                   }
+               }else if(!unlock){
+                        ulock=false
+                        }
+            
             ctx.lineWidth=upg.lineWidth;
-            if(upg.children[i].unlocked){
+            if(ulock){
                ctx.filter="brightness(100%)"
                }else{
                    ctx.filter="brightness(50%)" 
                }
             
-            if(upg.x>=upg.children[i].x){
-               var lineX = upg.x-upg.length;
-               }else{
+            var lineX;
+            var lineY;
+            if(upg.x>upg.children[i].x){
+               lineX = upg.x-upg.length;
+                lineY = upg.y;
+                
+               }else if(upg.children[i].x===upg.x){
+                        if(upg.children[i].y>upg.y){
+                            lineX = upg.x;
+                            lineY = upg.y+upg.length;
+                            
+                           }else{
+                              
+                               lineX = upg.x
+                              lineY = upg.y-upg.length;
+                           }
+                        }else{
                    var lineX = upg.x+upg.length;
+                            var lineY = upg.y;
                }
             
-        var lineY = upg.y;
+        
         ctx.strokeStyle="white";
         ctx.beginPath();
         ctx.moveTo(upg.x,upg.y);
-        
+        console.log(upg.x,upg.y,lineX,lineY)
         ctx.lineTo(lineX,lineY);
         
         ctx.lineWidth=upg.lineWidth;
@@ -330,7 +520,11 @@ var loadedimages=0;
             ctx.lineTo(lineX,upg.children[i].y);
             ctx.lineTo(upg.children[i].x,upg.children[i].y);
             ctx.stroke();
-       recursiveDraw(upg.children[i],upg.children[i].unlocked);
+            
+
+            
+            
+       recursiveDraw(upg.children[i],ulock);
         
     }
    drawUpgrade(upg,unlock)
@@ -346,11 +540,11 @@ var loadedimages=0;
                 ctx.filter="brightness(50%)"    
            }
         console.log(ctx.filter,unlock)
-        ctx.translate((upg.x-upg.w/2),(upg.y-upg.h/2));
+        ctx.translate((upg.x-upg.w/2),((upg.y+sin*moveMultiplier)-upg.h/2));
                 
         upg.draw();
         
-        ctx.translate(-(upg.x-upg.w/2),-(upg.y-upg.h/2));
+        ctx.translate(-(upg.x-upg.w/2),-((upg.y+sin*moveMultiplier)-upg.h/2));
         
     }
 
