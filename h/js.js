@@ -46,9 +46,9 @@ var upFrame = document.createElement("iframe");
     
     upFrame.src = "https://comic-quest.github.io/mejora/";
     
-    upFrame.width = 500;
+    upFrame.width = 381;
     
-    upFrame.height = 400;
+    upFrame.height = 485;
     
     upFrame.id="upFrame";
     
@@ -59,7 +59,7 @@ var upFrame = document.createElement("iframe");
 
 upgrade.appendChild(upScreen);
     
-    links.style.visibility="hidden";
+    //links.style.visibility="hidden";
 
 window.addEventListener("message", receiveMessage, false);
 
@@ -67,8 +67,12 @@ function receiveMessage(event) {
   if (!event.origin.includes("https://comic-quest.github.io"))
     return;
     
-    if(event.data==="upgraded"){
+    if(event.data==="nextPage"){
        links.style.visibility="visible"
+       }
+    
+    if(event.data==="hideNext"){
+       links.style.visibility="hidden"
        }
 
 }
