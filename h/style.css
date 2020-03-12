@@ -19,7 +19,7 @@
 
 #upgrade:hover{
     
-    right:-500px;
+    right: -433px;
     
 }
 #upgrade:hover #upscreen{
@@ -41,8 +41,8 @@
 
 
 #upscreen{
-    height:0;
-    width:500px;
+    
+    
     background-color:#EEEEEE;
     box-shadow: 0px 1px 0px  grey;
     position:absolute;
@@ -65,7 +65,7 @@ header{background-color:#FFFF00}
 #content{background-color:#888888;overflow:hidden}
 #info span .spoiler.open{background-image: linear-gradient(to right, #443344 0%, #3C2255 7%, #3C2255 93%, #443344 100%);}
 #latestpages span div.spoiler.open{background-image: linear-gradient(to right, #3C2255 0%, #c3c3c3 1%, #c3c3c3 99%, #3C2255 100%) !important; border:2px black solid}
-html{filter: invert(0%);}
+html{filter: invert(0%);transition: transform 1s ease-in-out}
  
 nav {
  

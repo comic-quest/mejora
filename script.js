@@ -236,63 +236,7 @@ var loadedimages=0;
                          lineWidth:2,
                             unlocked:true}),true)
     
-  /*
-    
-    pushUpgrade(CQ,new Upgrade({x:-140,
-                         y:100,
-                         w:40,
-                         h:40,
-                         img:mejora,
-                        length:0,
-                         lineWidth:3,
-                            unlocked:false}),true)
-    
-      pushUpgrade(CQ,new Upgrade({x:-120,
-                         y:-80,
-                         w:40,
-                         h:40,
-                         img:mejora,
-                        length:0,
-                         lineWidth:2,
-                            unlocked:true}),true)
-    
-          pushUpgrade(CQ,new Upgrade({x:-120,
-                         y:0,
-                         w:40,
-                         h:40,
-                         img:mejora,
-                        length:0,
-                         lineWidth:2,
-                            unlocked:true}),true)
-    
-              pushUpgrade(CQ,new Upgrade({x:0,
-                         y:100,
-                         w:40,
-                         h:40,
-                         img:mejora,
-                        length:0,
-                         lineWidth:2,
-                            unlocked:false}),true)
-            pushUpgrade(CQ.children[CQ.children.length-1],new Upgrade({x:40,
-                         y:50,
-                         w:40,
-                         h:40,
-                         img:mejora,
-                        length:0,
-                         lineWidth:2,
-                            unlocked:true}),true)
-    
-    pushUpgrade(CQ.children[CQ.children.length-1],new Upgrade({x:-100,
-                         y:50,
-                         w:40,
-                         h:40,
-                         img:mejora,
-                        length:0,
-                         lineWidth:2,
-                            unlocked:true}),true)
-                
-    
-              */
+ 
    
    function pushUpgrade(parent,child,relative){
        

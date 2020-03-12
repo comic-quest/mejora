@@ -30,6 +30,7 @@ window.addEventListener("load",function(){
     
     var canvas = document. getElementById("canvas");
     var ctx = canvas.getContext("2d");
+    ctx.font="14px Arial"
     
     var debugX;
     var debugY;
@@ -45,7 +46,13 @@ window.addEventListener("load",function(){
         
         draggingEnd:{x:0,y:0}
     */
-        currentImg:0
+        currentImg:0,
+        mousePos:{
+            x:0,
+            y:0
+        },
+        offsetX:20,
+        offsetY:0
     }
         
         var mouseOn;
@@ -58,7 +65,7 @@ window.addEventListener("load",function(){
         
     var mejoras = [];
     
-    function Mejora(x,y,w,h){
+    function Mejora(x,y,w,h,box){
         this.x = x;
         this.y = y;
         this.w = w;
@@ -70,33 +77,157 @@ window.addEventListener("load",function(){
               }
            
        }
+        if(box){
+           this.box = box;
+            this.box.parent = this;
+           }else{
+               this.box = new TextBox("prueba 1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7 8 9",50,50,200,500,30);
+               this.box.parent = this;
+           }
+        
     }
     
     
     
-    mejoras.push(new Mejora(166,106,48,59))
     
-    mejoras.push(new Mejora(122,112,0,0))
-    
-    mejoras.push(new Mejora(76,137,47,48))
-    
-    mejoras.push(new Mejora(73,218,46,45))
-    
-    mejoras.push(new Mejora(15,175,47,46))
-    
-    mejoras.push(new Mejora(19,266,47,46))
+    function TextBox(text,w,h,spacing){
+        this.w = w;
+        this.h = h;
+        this.lines = [];
+        this.text = text;
+        this.spacing=spacing;
         
-    mejoras.push(new Mejora(57,325,46,47))
+        this.computeLines = function(){
+        
+            
+        
+        var words = text.split(" ");
+        
+        var textBuffer = "";
+        
+        var lines = [];
+        
+        for(var i = 0;i<words.length;i++){//////////////////////////
+            
+            var testLine;
+            if(textBuffer==""){
+               
+                testLine = textBuffer+words[i];
+               
+               }else{
+                  testLine =  textBuffer+" "+words[i];
+               }
+            
+            
+            var testWidth = ctx.measureText(testLine);
+            
+            var lineHeight = testWidth.actualBoundingBoxAscent+testWidth.actualBoundingBoxDescent;
+            
+            if(i==1){
+                
+                
+
+                }
+            if(testWidth.width>w){
+                //no cabe
+                
+                var width = ctx.measureText(textBuffer).width;
+                
+                    this.lines.push({text:textBuffer,lineHeight:lineHeight,width:width});
+                    textBuffer = "";
+                
+               }else{
+                //cabe
+                    textBuffer = testLine;
+                   if(i===words.length-1){
+                       testWidth = ctx.measureText(textBuffer)
+                      
+                       this.lines.push({text:textBuffer,lineHeight:lineHeight,width:testWidth.width});
+                       
+                       
+                       
+                       
+                      }
+                   
+               }
+        }//////////////////////////
+            
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+        this.computeLines();
+        
+        this.drawTextBox = function(x,y){
+            
+            ctx.beginPath();
+        ctx.fillStyle="white";
+        
+        ctx.rect(x-3,y-3,w+3,Math.max(this.lines.length*spacing+3,h+3));
+            ctx.closePath();
+        ctx.fill();
+            
+                ctx.beginPath();
+        ctx.fillStyle="black";        
+        
+        ctx.rect(x,y,w-3,Math.max(this.lines.length*spacing-3,h-3));
+            ctx.closePath();
+        ctx.fill();
+            for(var i = 0 ; i < this.lines.length ; i++){
+                ctx.fillStyle="white";
+                ctx.fillText(this.lines[i].text,x,(y+this.spacing*i)+this.lines[i].lineHeight);
+                
+                
+            }
+            
+            /*
+            ctx.strokeStyle="red";
+            ctx.strokeRect(x-3,y-3,w+3,Math.max(this.lines.length*spacing+3,h+3));
+            
+            ctx.strokeStyle="blue";
+            ctx.strokeRect(x,y,w-3,Math.max(this.lines.length*spacing-3,h-3));
+            
+            ctx.strokeStyle="green";
+            ctx.strokeRect(x,y,this.lines[0].width,h);
+            console.log(this.lines[0].width,ctx.measureText("probando 123"))
+            */
+            
+            
+            
+        }
+            
+    }
     
-    mejoras.push(new Mejora(18,383,47,46))
     
-    mejoras.push(new Mejora(167,189,48,58))
     
-    mejoras.push(new Mejora(75,65,48,48))
+    mejoras.push(new Mejora(166,106,48,59,new TextBox("probando 123 123 123 123 123 123 123 123 123",150,70,15)))
     
-    mejoras.push(new Mejora(167,269,49,58))
+    mejoras.push(new Mejora(122,112,0,0,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
     
-    mejoras.push(new Mejora(302,171,64,94))
+    mejoras.push(new Mejora(76,137,47,48,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    
+    mejoras.push(new Mejora(73,218,46,45,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    
+    mejoras.push(new Mejora(15,175,47,46,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    
+    mejoras.push(new Mejora(19,266,47,46,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+        
+    mejoras.push(new Mejora(57,325,46,47,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    
+    mejoras.push(new Mejora(18,383,47,46,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    
+    mejoras.push(new Mejora(167,189,48,58,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    
+    mejoras.push(new Mejora(75,65,48,48,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    
+    mejoras.push(new Mejora(167,269,49,58,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    
+    mejoras.push(new Mejora(302,171,64,94,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
     
     
     
@@ -135,14 +266,14 @@ window.addEventListener("load",function(){
                 
                 if(loadedImages===totalImages){
                    if(ready){
-                      console.log("yeehaw");
+                      
                       init();
                       }
                     
                     
                    }
                array.push(img) 
-                console.log("yeet")
+                
             }
             img.src = url;
             
@@ -161,7 +292,7 @@ window.addEventListener("load",function(){
         function init(){ ///////////////////////////////////////////   init
             
             requestAnimationFrame(draw);
-            console.log(mejoras)
+            
             
             
             function draw(){
@@ -185,6 +316,28 @@ window.addEventListener("load",function(){
                 
                 //console.log(imagen,camara.currentImg)
                 ctx.drawImage(imagen,0,0,imagen.width,imagen.height)
+                
+                if(mouseOn){
+                    
+                    if(mouseOn.box){
+                        var textPos = {x:camara.x+camara.mousePos.x+camara.offsetX,y:camara.y+camara.mousePos.y+camara.offsetY}
+                        
+                       if(textPos.x+mouseOn.box.w>canvas.width){
+                           
+                           
+                           textPos.x -= (mouseOn.box.w+camara.offsetX*2)
+                          
+                          }
+                        
+                         mouseOn.box.drawTextBox(textPos.x,textPos.y);
+                        
+                       }
+                    
+                   
+                    
+                }
+                
+                
                 
             //ctx.strokeStyle="red";
             //ctx.rect(166,106,48,59);
@@ -278,6 +431,7 @@ window.addEventListener("load",function(){
         
     canvas.addEventListener("mousemove",function(e){
         
+        camara.mousePos = {x:e.offsetX,y:e.offsetY}
         
         var on = false;
         
@@ -315,6 +469,8 @@ window.addEventListener("load",function(){
                    
                    
            canvas.style.cursor = "default";
+                
+                mouseOn = undefined;
            }
             
         }
