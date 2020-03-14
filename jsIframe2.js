@@ -26,7 +26,23 @@ window.addEventListener("load",function(){
                console.log("click!")
               }
 
+    var hrefIndex = document.location.href.indexOf("?p")
     
+    var pageNumber
+    
+    if(hrefIndex== -1){
+       
+        pageNumber=0;
+        
+       }else{
+           
+           pageNumber = document.location.href(document.location.href.indexOf("?p")+3)
+           
+       }
+    
+    
+    
+    console.log(pageNumber)
     
     var canvas = document. getElementById("canvas");
     var ctx = canvas.getContext("2d");
@@ -63,7 +79,7 @@ window.addEventListener("load",function(){
     
     var time = 0;
         
-    var mejoras = [];
+    
     
     function Mejora(x,y,w,h,box){
         this.x = x;
@@ -203,6 +219,9 @@ window.addEventListener("load",function(){
             
     }
     
+    var upgradeArray = []
+    
+    var mejoras = [];
     
     
     mejoras.push(new Mejora(166,106,48,59,new TextBox("probando 123 123 123 123 123 123 123 123 123",150,70,15)))
@@ -229,6 +248,96 @@ window.addEventListener("load",function(){
     
     mejoras.push(new Mejora(302,171,64,94,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
     
+    upgradeArray.push(mejoras)
+    
+    mejoras = [];
+    
+    
+    mejoras = upgradeArray[0]
+    
+    
+    var paginas = [];
+    
+    
+    
+    paginas.push(new Pagina(upgradeArray,[
+    
+        new Layer("fondos/mejoras-1-0.png",1,1,0,0),
+        
+        new Layer("fondos/mejoras-1-1.png",1,1,5,0),
+        
+        new Layer("fondos/mejoras-1-2.png",1,1,5,0)
+        
+    ]));
+    
+    
+    
+            
+    function Layer(url,phase,speed,amplitude,height){
+            
+            this.url = url;
+            this.phase = phase;
+            this.speed = speed;
+            this.amplitude = amplitude;
+            this.height = height;
+        
+            this.image = new Image();
+        
+            this.image.onload=function(){
+                
+                canvas.width = this.image.width;
+                canvas.height = this.image.height;
+                
+            }
+            
+            
+            this.image.src = url;
+            
+            this.renderLayer = function(){
+            
+                var imageHeight = Math.sin((time+this.phase)*0.001*this.speed)*this.amplitude+height;
+            
+                ctx.drawImage(this.image,0,imageHeight);
+                
+                console.log(imageHeight)
+            
+            }
+            
+        }
+    
+    
+    function Pagina(upgrades,layers){
+        
+        this.upgrades = upgrades;
+        this.layers = layers;
+        
+        this.renderPage = function(){
+            
+            for(var i = 0;i < this.layers.length;i++){
+                
+                this.layers[i].renderLayer();
+                
+            }
+            
+        }
+        
+        
+    }
+    
+    var currentPage;
+    
+    if(paginas[pageNumber]){
+       
+        currentPage = paginas[pageNumber];
+        
+       }else{
+           
+           currentPage = paginas[0]
+           
+       }
+    
+    
+    
     
     
         function checkCollision(upg,x,y){//-----
@@ -248,44 +357,6 @@ window.addEventListener("load",function(){
         
       
     
-        var imagenesFondo = [];
-    
-        var totalImages = 0;
-    
-        var loadedImages = 0;
-    
-        var ready = false;
-    
-    
-    
-        function loadImage(url,array){
-            
-            var img = new Image();
-            
-            img.onload = function(){
-                
-                if(loadedImages===totalImages){
-                   if(ready){
-                      
-                      init();
-                      }
-                    
-                    
-                   }
-               array.push(img) 
-                
-            }
-            img.src = url;
-            
-        }
-    
-    loadImage("fondos/ciervait_0000_Capa-1.png",imagenesFondo);
-    loadImage("fondos/ciervait_0001_Capa-2.png",imagenesFondo);
-    loadImage("fondos/ciervait_0002_Capa-3.png",imagenesFondo);
-    loadImage("fondos/ciervait_0003_Capa-4.png",imagenesFondo);
-    
-    ready = true;
-    
     
         
     
@@ -302,20 +373,12 @@ window.addEventListener("load",function(){
                         now = new Date();
                 time = now.getTime()-startTime.getTime();
                 
-                var mod = time%(imagenesFondo.length*200)
                 
-                var imagen = imagenesFondo[Math.floor(mod/200)]
                 
                 ctx.fillStyle="black"
                 ctx.fillRect(0,0,canvas.width,canvas.height);
                 
-                
-                
-                
-                
-                
-                //console.log(imagen,camara.currentImg)
-                ctx.drawImage(imagen,0,0,imagen.width,imagen.height)
+                    currentPage.renderPage();
                 
                 if(mouseOn){
                     
@@ -496,7 +559,7 @@ window.addEventListener("load",function(){
         
     }
     
-    
-    
+    //setTimeout(init,5000)
+   init(); 
 }) //fin
 
