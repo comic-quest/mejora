@@ -36,7 +36,7 @@ window.addEventListener("load",function(){
         
        }else{
            
-           pageNumber = document.location.href(document.location.href.indexOf("?p")+3)
+           pageNumber = document.location.href.substring(document.location.href.indexOf("?p")+3)
            
        }
     
