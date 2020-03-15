@@ -16,6 +16,14 @@ if ( !window.requestAnimationFrame ) {
 
 }
 
+var cqTexts = "CQ no fabrica para otras marcas\nCambiando de artista desde 2017\nHecho en el garaje de erizo\nErizo no tiene garaje\nUniverse approves\nThe bite of 87\nall your FACM are belong to us\n¡Hola, mundo!\nSOLO\nHola, Chess\nLo importante no son los Favs\nFunniest shit i've ever seen\nLa Fundación Áurea no hizo nada malo\nComo Speedwagon pero en alien\nThe end of Comic Machine\nCQ 1.11: You are (not) a furry\nPrueba mi fursona\n¡Hey, CQ, Reader here!\nAtrapados en casa\nÉl siempre ve\nNo tenemos los permisos en orden\nEvadimos impuestos\nArael no es canon aquí"
+
+cqTexts = cqTexts.split("\n");
+
+function pickRandomText(){
+    
+    return cqTexts[Math.floor(Math.random()*cqTexts.length)]
+}
 
 
 
@@ -46,7 +54,7 @@ window.addEventListener("load",function(){
     
     var canvas = document. getElementById("canvas");
     var ctx = canvas.getContext("2d");
-    ctx.font="14px Arial"
+    ctx.font="20px Arial"
     
     var debugX;
     var debugY;
@@ -112,6 +120,7 @@ window.addEventListener("load",function(){
         this.lines = [];
         this.text = text;
         this.spacing=spacing;
+        this.textHeight = 0;
         
         this.computeLines = function(){
         
@@ -122,53 +131,102 @@ window.addEventListener("load",function(){
         var textBuffer = "";
         
         var lines = [];
+            
+        this.textHeight = 0;
+            
+        var lastTest;
         
         for(var i = 0;i<words.length;i++){//////////////////////////
             
             var testLine;
             if(textBuffer==""){
                
-                testLine = textBuffer+words[i];
+                testLine = words[i];
                
                }else{
                   testLine =  textBuffer+" "+words[i];
                }
             
             
+            
+            
             var testWidth = ctx.measureText(testLine);
             
             var lineHeight = testWidth.actualBoundingBoxAscent+testWidth.actualBoundingBoxDescent;
             
-            if(i==1){
+            /*
+            if(i==0){
+               
+                this.textHeight = testWidth.actualBoundingBoxAscent
                 
-                
-
-                }
-            if(testWidth.width>w){
+               }else if(i===words.length-1){
+                        
+                   this.textHeight += (this.spacing*lines.length)+testWidth.actualBoundingBoxDescent
+                   
+                        
+                        }
+            */
+            if(testWidth.width>w-5){
                 //no cabe
                 
-                var width = ctx.measureText(textBuffer).width;
+                var width = ctx.measureText(textBuffer)
                 
-                    this.lines.push({text:textBuffer,lineHeight:lineHeight,width:width});
-                    textBuffer = "";
+                lastTest = width;
+                
+                this.lines.push({text:textBuffer,lineHeight:lineHeight,width:width.width});
+                
+                if(this.lines.length==1){
+                       console.log("hh1")
+                        this.textHeight = width.actualBoundingBoxAscent
+                        console.log(this.textHeight)
+                        
+                       }
+                
+                if(i===words.length-1){
+                    var width2 = ctx.measureText(words[i])
+                    
+                    lastTest=width2;
+                       
+                       this.lines.push({text:words[i],lineHeight:width2.actualBoundingBoxDescent+width2.actualBoundingBoxAscent ,width:width2.width});
+                       
+                      }
+                
+                    
+                
+                    
+                
+                    textBuffer = words[i];
                 
                }else{
                 //cabe
                     textBuffer = testLine;
                    if(i===words.length-1){
-                       testWidth = ctx.measureText(textBuffer)
+                       
                       
                        this.lines.push({text:textBuffer,lineHeight:lineHeight,width:testWidth.width});
                        
+                       if(this.lines.length==1){
+                       
+                        this.textHeight = testWidth.actualBoundingBoxAscent
+                        
+                       }
+                       
+                       
+                       lastTest=testWidth
                        
                        
                        
                       }
                    
                }
+            console.log(this.textHeight,this.spacing,this.lines,testWidth.actualBoundingBoxAscent,testWidth.actualBoundingBoxDescent)
         }//////////////////////////
             
-        
+            
+            
+            
+        this.textHeight += (this.spacing*this.lines.length)+lastTest.actualBoundingBoxDescent
+            console.log(lastTest)
         
         
         
@@ -184,14 +242,14 @@ window.addEventListener("load",function(){
             ctx.beginPath();
         ctx.fillStyle="white";
         
-        ctx.rect(x-3,y-3,w+3,Math.max(this.lines.length*spacing+3,h+3));
+        ctx.rect(x-3,y-3,w+3,Math.max(this.textHeight+3,h+3));
             ctx.closePath();
         ctx.fill();
             
                 ctx.beginPath();
         ctx.fillStyle="black";        
         
-        ctx.rect(x,y,w-3,Math.max(this.lines.length*spacing-3,h-3));
+        ctx.rect(x,y,w-3,Math.max(this.textHeight-3,h-3));
             ctx.closePath();
         ctx.fill();
             for(var i = 0 ; i < this.lines.length ; i++){
@@ -223,7 +281,7 @@ window.addEventListener("load",function(){
     
     var mejoras = [];
     
-    
+    /*
     mejoras.push(new Mejora(166,106,48,59,new TextBox("probando 123 123 123 123 123 123 123 123 123",150,70,15)))
     
     mejoras.push(new Mejora(122,112,0,0,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
@@ -245,8 +303,8 @@ window.addEventListener("load",function(){
     mejoras.push(new Mejora(75,65,48,48,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
     
     mejoras.push(new Mejora(167,269,49,58,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
-    
-    mejoras.push(new Mejora(302,171,64,94,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    */
+    mejoras.push(new Mejora(302,171,64,94,new TextBox(pickRandomText(),175,5,25)))
     
     upgradeArray.push(mejoras)
     
@@ -262,11 +320,11 @@ window.addEventListener("load",function(){
     
     paginas.push(new Pagina(upgradeArray,[
     
-        new Layer("fondos/mejoras-1-0.png",1,1,0,0),
+        new Layer("fondos/mejoras-1-0.png",0,1,0,0),
         
-        new Layer("fondos/mejoras-1-1.png",1,1,5,0),
+        new Layer("fondos/mejoras-1-1.png",0,1,5,0),
         
-        new Layer("fondos/mejoras-1-2.png",1,1,5,0)
+        new Layer("fondos/mejoras-1-2.png",Math.PI/4,1,5,0)
         
     ]));
     
@@ -295,11 +353,10 @@ window.addEventListener("load",function(){
             
             this.renderLayer = function(){
             
-                var imageHeight = Math.sin((time+this.phase)*0.001*this.speed)*this.amplitude+height;
+                var imageHeight = Math.sin(time*0.001*this.speed+this.phase)*this.amplitude+height;
             
                 ctx.drawImage(this.image,0,imageHeight);
                 
-                console.log(imageHeight)
             
             }
             
