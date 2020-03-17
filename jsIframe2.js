@@ -54,7 +54,7 @@ window.addEventListener("load",function(){
     
     var canvas = document. getElementById("canvas");
     var ctx = canvas.getContext("2d");
-    ctx.font="20px Arial"
+    //ctx.font="20px Arial"
     
     var debugX;
     var debugY;
@@ -114,17 +114,29 @@ window.addEventListener("load",function(){
     
     
     
-    function TextBox(text,w,h,spacing){
+    function TextBox(text,w,h,spacing,font,color){
         this.w = w;
         this.h = h;
         this.lines = [];
         this.text = text;
         this.spacing=spacing;
         this.textHeight = 0;
+        if(font){
+           this.font = font;
+           }else{
+               this.font = "20px Courier New"
+           }
+        
+        if(color){
+           this.color = color;
+           }else{
+               this.color = "red";
+           }
+        
         
         this.computeLines = function(){
         
-            
+            ctx.font = this.font;
         
         var words = text.split(" ");
         
@@ -139,6 +151,16 @@ window.addEventListener("load",function(){
         for(var i = 0;i<words.length;i++){//////////////////////////
             
             var testLine;
+            
+            if(words[i] == "\n"){
+            
+                var testWidth = ctx.measureText(textBuffer)
+                
+                this.lines.push({text:textBuffer,lineHeight:testWidth.actualBoundingBoxAscent,width:testWidth.width});
+                textBuffer="";
+            }else{
+                
+                
             if(textBuffer==""){
                
                 testLine = words[i];
@@ -152,7 +174,7 @@ window.addEventListener("load",function(){
             
             var testWidth = ctx.measureText(testLine);
             
-            var lineHeight = testWidth.actualBoundingBoxAscent+testWidth.actualBoundingBoxDescent;
+            var lineHeight = testWidth.actualBoundingBoxAscent;
             
             /*
             if(i==0){
@@ -187,7 +209,7 @@ window.addEventListener("load",function(){
                     
                     lastTest=width2;
                        
-                       this.lines.push({text:words[i],lineHeight:width2.actualBoundingBoxDescent+width2.actualBoundingBoxAscent ,width:width2.width});
+                       this.lines.push({text:words[i],lineHeight:width2.actualBoundingBoxAscent ,width:width2.width});
                        
                       }
                 
@@ -220,6 +242,9 @@ window.addEventListener("load",function(){
                    
                }
             console.log(this.textHeight,this.spacing,this.lines,testWidth.actualBoundingBoxAscent,testWidth.actualBoundingBoxDescent)
+                
+            }
+            
         }//////////////////////////
             
             
@@ -253,8 +278,14 @@ window.addEventListener("load",function(){
             ctx.closePath();
         ctx.fill();
             for(var i = 0 ; i < this.lines.length ; i++){
-                ctx.fillStyle="white";
-                ctx.fillText(this.lines[i].text,x,(y+this.spacing*i)+this.lines[i].lineHeight);
+                if(i==0){
+                   ctx.fillStyle=this.color;
+                   }else{
+                       ctx.fillStyle="white";
+                   }
+                
+                ctx.font = this.font;
+                ctx.fillText(this.lines[i].text,x+3,(y+this.spacing*i)+this.lines[i].lineHeight+3); //quitar el +3 alaverga me da sida de verlo
                 
                 
             }
@@ -281,30 +312,28 @@ window.addEventListener("load",function(){
     
     var mejoras = [];
     
-    /*
-    mejoras.push(new Mejora(166,106,48,59,new TextBox("probando 123 123 123 123 123 123 123 123 123",150,70,15)))
     
-    mejoras.push(new Mejora(122,112,0,0,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    mejoras.push(new Mejora(166,106,48,59,new TextBox("Puzzles: \n A partir de ahora las salas de la mazmorra pueden contener rompecabezas",150,70,25))) //P
     
-    mejoras.push(new Mejora(76,137,47,48,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    mejoras.push(new Mejora(76,137,47,48,new TextBox("Premios: \n añade recompensas al final de los combates",200,70,25))) //PN
     
-    mejoras.push(new Mejora(73,218,46,45,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    mejoras.push(new Mejora(73,218,46,45,new TextBox("Tienda: \n Añade salas con tienda a la mazmorra",150,70,25))) //T 
     
-    mejoras.push(new Mejora(15,175,47,46,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    mejoras.push(new Mejora(15,175,47,46,new TextBox("Salas del tesoro: \n Añade salas con cofre al repertorio de la mazmorra",250,70,25))) //ST
     
-    mejoras.push(new Mejora(19,266,47,46,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
-        
-    mejoras.push(new Mejora(57,325,46,47,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    mejoras.push(new Mejora(19,266,47,46,new TextBox("Objetos: \n Con esta mejora puedes encontrar diferentes objetos en la mazmorra y guardarlos en tu inventario",200,70,25))) //OBJ 
+      
+    mejoras.push(new Mejora(57,325,46,47,new TextBox("Nivel: \n Sube de nivel, adquiere habilidades y asesina a todo lo que se oponga a ti",250,70,25))) //LV
     
-    mejoras.push(new Mejora(18,383,47,46,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    mejoras.push(new Mejora(18,383,47,46,new TextBox("Música de combate: \n Ahora sonará un tema de combate cuando estés enzarzado en una disputa",280,70,15,"16px Courier New"))) //CM
     
-    mejoras.push(new Mejora(167,189,48,58,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    mejoras.push(new Mejora(167,189,48,58,new TextBox("Salas: \n Añade variedad a las habitaciones de la mazmorra",150,70,25))) //S
     
-    mejoras.push(new Mejora(75,65,48,48,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
+    mejoras.push(new Mejora(75,65,48,48,new TextBox("Pistas: \n ¿Atascado? esta mejora te otorga la posibilidad de comprar una pista por Comic Coins",200 ,70,25))) //PS
     
-    mejoras.push(new Mejora(167,269,49,58,new TextBox("probando 123 123 123 123 123 123 123 123 123",100,70,15)))
-    */
-    mejoras.push(new Mejora(302,171,64,94,new TextBox(pickRandomText(),175,5,25)))
+    mejoras.push(new Mejora(167,269,49,58,new TextBox("Combate: \n Date de leches contra los enemigos gracias a esta mejora",150,70,25))) //COM
+    
+    mejoras.push(new Mejora(302,171,64,94,new TextBox("CQ: \n "+pickRandomText(),175,5,25))) //CQ
     
     upgradeArray.push(mejoras)
     
