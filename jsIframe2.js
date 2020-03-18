@@ -29,6 +29,8 @@ function pickRandomText(){
 
 window.addEventListener("load",function(){
     
+    var debug = true;
+    
     if(window.parent){
               window.parent.postMessage("hideNext","*")
                console.log("click!")
@@ -40,7 +42,7 @@ window.addEventListener("load",function(){
     
     if(hrefIndex== -1){
        
-        pageNumber=0;
+        pageNumber=1;
         
        }else{
            
@@ -58,6 +60,9 @@ window.addEventListener("load",function(){
     
     var debugX;
     var debugY;
+    
+    var loadingCount = 0;
+    var loadedCount = 0;
     
         var camara = {
         x:0,
@@ -105,9 +110,22 @@ window.addEventListener("load",function(){
            this.box = box;
             this.box.parent = this;
            }else{
-               this.box = new TextBox("prueba 1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7 8 9",50,50,200,500,30);
+               this.box = new TextBox("Esto es un texto de prueba.",110,50,15,undefined,"red");
                this.box.parent = this;
            }
+        
+        this.drawDebug = function(){
+            
+            ctx.beginPath();
+            ctx.rect(this.x,this.getPosition(),this.w,this.h);
+            ctx.closePath();
+            ctx.strokeStyle="red";
+            ctx.stroke();
+            
+            
+        }
+        
+        this.getPosition = function(){return  this.y+this.parent.layers[i].getPosition();}
         
     }
     
@@ -335,19 +353,29 @@ window.addEventListener("load",function(){
     
     mejoras.push(new Mejora(302,171,64,94,new TextBox("CQ: \n "+pickRandomText(),175,5,25))) //CQ
     
-    upgradeArray.push(mejoras)
+    upgradeArray.push([...mejoras])
     
     mejoras = [];
     
+    mejoras.push(new Mejora(166,106,48,59,new TextBox("Puzzles: \n A partir de ahora las salas de la mazmorra pueden contener rompecabezas",150,70,25))) //P
     
-    mejoras = upgradeArray[0]
-    
+    upgradeArray.push([...mejoras])
     
     var paginas = [];
     
     
     
-    paginas.push(new Pagina(upgradeArray,[
+    paginas.push(new Pagina(upgradeArray[0],[
+    
+        new Layer("fondos/mejoras-2-0.png",0,1,0,0),
+        
+        new Layer("fondos/mejoras-2-1.png",0,1,5,0),
+        
+        new Layer("fondos/mejoras-2-2.png",Math.PI/4,1,5,0)
+        
+    ]));
+    
+    paginas.push(new Pagina(upgradeArray[1],[
     
         new Layer("fondos/mejoras-1-0.png",0,1,0,0),
         
@@ -357,7 +385,24 @@ window.addEventListener("load",function(){
         
     ]));
     
+    startLoad();
     
+    console.log(loadingCount,loadedCount);
+    
+    function startLoad(){
+        
+        for(i=0;i<paginas.length;i++){
+            
+            for(j=0;j<paginas[i].layers.length;j++){
+                
+                var layer = paginas[i].layers[j]
+                
+                layer.image.src = layer.url;
+            }
+            
+        }
+        
+    }
     
             
     function Layer(url,phase,speed,amplitude,height){
@@ -369,24 +414,37 @@ window.addEventListener("load",function(){
             this.height = height;
         
             this.image = new Image();
+        loadingCount++
         
             this.image.onload=function(){
                 
-                canvas.width = this.image.width;
-                canvas.height = this.image.height;
+
+                loadedCount++
+                
+                if(loadedCount==loadingCount){
+                   init();
+                   }
+                
                 
             }
             
             
-            this.image.src = url;
+            
+            //this.image.src = url;
             
             this.renderLayer = function(){
             
-                var imageHeight = Math.sin(time*0.001*this.speed+this.phase)*this.amplitude+height;
-            
-                ctx.drawImage(this.image,0,imageHeight);
                 
             
+                ctx.drawImage(this.image,0,this.getPosition());
+                
+            
+            }
+            
+            this.getPosition = function(){
+                
+                return Math.sin(time*0.001*this.speed+this.phase)*this.amplitude+height;
+                
             }
             
         }
@@ -404,6 +462,12 @@ window.addEventListener("load",function(){
                 this.layers[i].renderLayer();
                 
             }
+            
+        }
+        
+        for(var i = 0;i<this.upgrades.length;i++){
+            
+            this.upgrades[i].parent = this;
             
         }
         
@@ -430,8 +494,8 @@ window.addEventListener("load",function(){
 
         if(upg.x<=x){//
         if(upg.x+upg.w>x){//-^ detección en la x
-                   if(upg.y<=y){
-                   if(upg.y+upg.h>y){
+                   if(upg.getPosition()<=y){
+                   if(upg.getPosition()+upg.h>y){
                        return true
                         }
                     }
@@ -442,7 +506,16 @@ window.addEventListener("load",function(){
         }//-----
         
       
-    
+    function changePage(n){
+        
+        pageNumber=n;
+        
+        currentPage = paginas[n];
+        
+        canvas.width = paginas[n].layers[0].image.width
+        canvas.height = paginas[n].layers[0].image.height
+        
+    }
     
         
     
@@ -450,11 +523,13 @@ window.addEventListener("load",function(){
             
             requestAnimationFrame(draw);
             
-            
+        
             
             function draw(){
                 
                 requestAnimationFrame(draw);
+                
+                changePage(pageNumber);
                 
                         now = new Date();
                 time = now.getTime()-startTime.getTime();
@@ -465,6 +540,12 @@ window.addEventListener("load",function(){
                 ctx.fillRect(0,0,canvas.width,canvas.height);
                 
                     currentPage.renderPage();
+                
+                for(var i = 0;i<currentPage.upgrades.length;i++){
+                    
+                    currentPage.upgrades[i].drawDebug();
+                    
+                }
                 
                 if(mouseOn){
                     
@@ -488,21 +569,7 @@ window.addEventListener("load",function(){
                 
                 
                 
-            //ctx.strokeStyle="red";
-            //ctx.rect(166,106,48,59);
-            //ctx.stroke();
-                /*
-                for(var i = 0;i<mejoras.length;i++){
-                    ctx.beginPath();
-                    ctx.strokeStyle="red";
-                    ctx.rect(mejoras[i].x,mejoras[i].y,mejoras[i].w,mejoras[i].h);
-                    ctx.closePath();
-                    ctx.stroke();
-                    
-                    
-                    
-                }
-                */
+            
                 
             }
             
@@ -527,11 +594,11 @@ window.addEventListener("load",function(){
                 }
              
         
-        for(var i = 0;i<mejoras.length;i++){
+        for(var i = 0;i<paginas[pageNumber].upgrades.length;i++){
             //check collision
             
-            if(checkCollision(mejoras[i],x,y)){
-                camara.clickedObject = mejoras[i];
+            if(checkCollision(paginas[pageNumber].upgrades[i],x,y)){
+                camara.clickedObject = paginas[pageNumber].upgrades[i];
                 //click
                 break;
                 
@@ -550,14 +617,39 @@ window.addEventListener("load",function(){
             
             
                 canvas.addEventListener("mouseup",function(e){
-                    
-                   /* var w = e.offsetX-debugX;
+                    if(debug){
+                        
+                        var w = e.offsetX-debugX;
                     var h = e.offsetY-debugY;
                     
-                    console.log(debugX,debugY,w,h);
+                        var upgPos = [debugX,debugY]
+                        
+                    if(w<0){
+                       
+                        upgPos[0]=e.offsetX
+                        
+                       }
+                        
+                        if(h<0){
+                           
+                            upgPos[1]=e.offsetY
+                            
+                           }
+                        
+                        w = Math.abs(w);
+                        h = Math.abs(h);
+                        
+                        var upg = new Mejora(upgPos[0],upgPos[1],w,h)
+                        
+                        upg.parent = currentPage;
                     
-                    mejoras.push(new Mejora(debugX,debugY,w,h))
-        */
+                    currentPage.upgrades.push(upg)
+                        
+                        console.log(currentPage);
+                       
+                       }
+                    
+                    
         camara.dragging=false;
         
         if(camara.movedWhileDragging){
@@ -599,11 +691,11 @@ window.addEventListener("load",function(){
             var x = e.offsetX-camara.x;
             var y = e.offsetY-camara.y;
         
-        for(var i = 0;i<mejoras.length;i++){
+        for(var i = 0;i<paginas[pageNumber].upgrades.length;i++){
             //check collision
             
-            if(checkCollision(mejoras[i],x,y)){
-                mouseOn = mejoras[i]
+            if(checkCollision(paginas[pageNumber].upgrades[i],x,y)){
+                mouseOn = paginas[pageNumber].upgrades[i]
                 canvas.style.cursor = "pointer";
                 on = true;
                 break;
@@ -646,6 +738,6 @@ window.addEventListener("load",function(){
     }
     
     //setTimeout(init,5000)
-   init(); 
+   //init(); 
 }) //fin
 
