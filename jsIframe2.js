@@ -713,6 +713,26 @@ window.addEventListener("load",function(){
             
         }
         
+        this.sub = document.createElement("button")
+        
+        this.sub.className = "elemValue"
+        
+        this.sub.innerHTML="guardar"
+        
+        this.sub.onclick = function(){
+            
+            var arr = []
+            
+            for(var i = 0;i<currentPage.upgrades.length;i++){
+                var u = currentPage.upgrades[i];
+               arr.push({x:u.x,y:u.y,w:u.w,h:u.h,text:u.box.text,color:u.box.color,boxw:u.box.w,boxh:u.box.h,font:u.boxfont})
+                
+            }
+            
+            document.write(JSON.stringify(arr))
+            
+        }
+        
         
         
         //this.text.style="flex:1 0 auto;"
@@ -725,6 +745,7 @@ window.addEventListener("load",function(){
         this.elem.appendChild(this.font)
         this.elem.appendChild(this.boxwh)
         this.elem.appendChild(this.del)
+        this.elem.appendChild(this.sub)
         
         
         
