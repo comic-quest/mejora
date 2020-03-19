@@ -5,11 +5,36 @@ body,html{
     background-color:transparent;
     
 overflow:hidden;
+    float:left;
     
 }
 
 #canvas{
     
     border-radius:7px;
+    
+    
+}
+
+#upgrades{  
+}
+
+.elemValue{
+    
+    flex:auto;
+    
+}
+
+.UpgElem{
+    
+    display:flex;
+    flex-direction: row;
+    width:100%;
+    
+}
+
+.debugElem{
+    
+    width:100%;
     
 }

@@ -31,7 +31,7 @@ window.addEventListener("load",function(){
     
     var debug = true;
     
-    if(window.parent){
+    if(window.self !== window.top){
               window.parent.postMessage("hideNext","*")
                console.log("click!")
               }
@@ -60,6 +60,10 @@ window.addEventListener("load",function(){
     
     var debugX;
     var debugY;
+    
+    var debugUpgradeArray = [];
+    
+    var debugUpgradeElement;
     
     var loadingCount = 0;
     var loadedCount = 0;
@@ -125,11 +129,19 @@ window.addEventListener("load",function(){
             
         }
         
-        this.getPosition = function(){return  this.y+this.parent.layers[i].getPosition();}
+        this.getPosition = function(){return this.y+this.parent.layers[1].getPosition();}
         
     }
     
     
+    
+    function addUpgrade(page,upg){
+        
+        page.upgrades.push(upg);
+        upg.parent = page;
+        updateUpgrades();
+        
+    }
     
     
     function TextBox(text,w,h,spacing,font,color){
@@ -156,11 +168,13 @@ window.addEventListener("load",function(){
         
             ctx.font = this.font;
         
-        var words = text.split(" ");
+        var words = this.text.split(" ");
+            
+            console.log(words)
         
         var textBuffer = "";
         
-        var lines = [];
+        this.lines = [];
             
         this.textHeight = 0;
             
@@ -170,7 +184,7 @@ window.addEventListener("load",function(){
             
             var testLine;
             
-            if(words[i] == "\n"){
+            if(words[i] == "\n" || words[i]=="\\n"){
             
                 var testWidth = ctx.measureText(textBuffer)
                 
@@ -206,7 +220,7 @@ window.addEventListener("load",function(){
                         
                         }
             */
-            if(testWidth.width>w-5){
+            if(testWidth.width>this.w-5){
                 //no cabe
                 
                 var width = ctx.measureText(textBuffer)
@@ -216,9 +230,9 @@ window.addEventListener("load",function(){
                 this.lines.push({text:textBuffer,lineHeight:lineHeight,width:width.width});
                 
                 if(this.lines.length==1){
-                       console.log("hh1")
+                       
                         this.textHeight = width.actualBoundingBoxAscent
-                        console.log(this.textHeight)
+                        
                         
                        }
                 
@@ -259,7 +273,7 @@ window.addEventListener("load",function(){
                       }
                    
                }
-            console.log(this.textHeight,this.spacing,this.lines,testWidth.actualBoundingBoxAscent,testWidth.actualBoundingBoxDescent)
+            
                 
             }
             
@@ -269,7 +283,7 @@ window.addEventListener("load",function(){
             
             
         this.textHeight += (this.spacing*this.lines.length)+lastTest.actualBoundingBoxDescent
-            console.log(lastTest)
+            
         
         
         
@@ -285,14 +299,14 @@ window.addEventListener("load",function(){
             ctx.beginPath();
         ctx.fillStyle="white";
         
-        ctx.rect(x-3,y-3,w+3,Math.max(this.textHeight+3,h+3));
+        ctx.rect(x-3,y-3,this.w+3,Math.max(this.textHeight+3,this.h+3));
             ctx.closePath();
         ctx.fill();
             
                 ctx.beginPath();
         ctx.fillStyle="black";        
         
-        ctx.rect(x,y,w-3,Math.max(this.textHeight-3,h-3));
+        ctx.rect(x,y,this.w-3,Math.max(this.textHeight-3,this.h-3));
             ctx.closePath();
         ctx.fill();
             for(var i = 0 ; i < this.lines.length ; i++){
@@ -307,7 +321,7 @@ window.addEventListener("load",function(){
                 
                 
             }
-            
+            console.log("bruh")
             /*
             ctx.strokeStyle="red";
             ctx.strokeRect(x-3,y-3,w+3,Math.max(this.lines.length*spacing+3,h+3));
@@ -517,6 +531,190 @@ window.addEventListener("load",function(){
         
     }
     
+    function updateUpgrades(){
+        
+        if(debug){
+            
+            document.body.removeChild(debugUpgradeElement);
+            
+            debugUpgradeElement = document.createElement("div");
+            
+            document.body.appendChild(debugUpgradeElement);
+           
+            for(var i = 0;i<currentPage.upgrades.length;i++){
+                
+               debugUpgradeElement.appendChild(new DebugElement(currentPage.upgrades[i]).elem);
+                
+            }
+            
+           }
+        
+    }
+    
+    
+    function DebugElement(upg){
+        
+        this.elem = document.createElement("div");
+        
+        this.elem.className = "UpgElem";
+        
+        this.text = document.createElement("INPUT");
+        
+        this.text.setAttribute("type","text")
+        
+        this.text.className="elemValue"
+        
+        this.upg = upg;
+        
+        this.text.value = upg.box.text;
+        
+        this.text.onchange = function(){
+            
+            var value = this.value;
+            
+            console.log(value)
+            
+            upg.box.text = value;
+            upg.box.computeLines();
+            
+            console.log(upg.box)
+            
+            
+            
+        }
+        
+        this.xy = document.createElement("INPUT")
+        
+        this.xy.setAttribute("type","text")
+        
+        this.xy.className="elemValue"
+        
+        this.xy.value = upg.x+","+upg.y;
+        
+        this.xy.onchange = function(){
+            
+            var value = this.value;
+            
+            var arr = value.split(",")
+            
+            upg.x = Number(arr[0]);
+            
+            upg.y = Number(arr[1]);
+                     
+            
+            
+        }
+        
+        this.wh = document.createElement("INPUT")
+        
+        this.wh.setAttribute("type","text")
+        
+        this.wh.className="elemValue"
+        
+        this.wh.value = upg.w+","+upg.h;
+        
+        this.wh.onchange = function(){
+            
+            var value = this.value;
+            
+            console.log(value)
+            
+            var arr = value.split(",")
+            
+            upg.w = Number(arr[0]);
+            
+            upg.h = Number(arr[1]);
+                     
+            
+            
+        }
+        
+        
+        
+        this.color = document.createElement("INPUT")
+        
+        this.color.setAttribute("type","color")
+        
+        this.color.className="elemValue"
+        
+        this.color.value = upg.box.color;
+        
+        this.color.onchange = function(){
+            console.log(this.value)
+            var value = this.value;
+            
+            console.log(value)
+            
+            upg.box.color = value;
+                     
+            
+            
+        }
+        
+        this.font = document.createElement("INPUT")
+        
+        this.font.setAttribute("type","text")
+        
+        this.font.className="elemValue"
+        
+        this.font.value = upg.box.font;
+        
+        this.font.onchange = function(){
+            
+            var value = this.value;
+            
+            console.log(value)
+            
+            upg.box.font = value;
+                     
+            
+            
+        }
+        
+        this.boxwh = document.createElement("INPUT")
+        
+        this.boxwh.setAttribute("type","text")
+        
+        this.boxwh.className="elemValue"
+        
+        this.boxwh.value = upg.box.w+","+upg.box.h;
+        
+        this.boxwh.onchange = function(){
+            
+            var value = this.value;
+            
+            console.log(value)
+            
+            var arr = value.split(",")
+            
+            upg.box.w = Number(arr[0]);
+            
+            upg.box.h = Number(arr[1])
+                     
+            console.log(upg)
+            upg.box.computeLines()
+            console.log(upg)
+            
+        }
+        
+        
+        
+        //this.text.style="flex:1 0 auto;"
+        
+        this.elem.appendChild(this.text);
+        
+        this.elem.appendChild(this.xy);
+        this.elem.appendChild(this.wh);
+        this.elem.appendChild(this.color)
+        this.elem.appendChild(this.font)
+        this.elem.appendChild(this.boxwh)
+        
+        
+        
+        
+        
+    }
+    
         
     
         function init(){ ///////////////////////////////////////////   init
@@ -524,6 +722,18 @@ window.addEventListener("load",function(){
             requestAnimationFrame(draw);
             
         
+            if(debug){
+               
+                if(window.self == window.top){
+                   
+                    debugUpgradeElement = document.createElement("div");
+                    
+                    document.body.appendChild(debugUpgradeElement);
+                    
+                    updateUpgrades();
+                    
+                }
+               }
             
             function draw(){
                 
@@ -558,7 +768,6 @@ window.addEventListener("load",function(){
                            textPos.x -= (mouseOn.box.w+camara.offsetX*2)
                           
                           }
-                        
                          mouseOn.box.drawTextBox(textPos.x,textPos.y);
                         
                        }
@@ -641,11 +850,9 @@ window.addEventListener("load",function(){
                         
                         var upg = new Mejora(upgPos[0],upgPos[1],w,h)
                         
-                        upg.parent = currentPage;
-                    
-                    currentPage.upgrades.push(upg)
+                       addUpgrade(currentPage,upg)
                         
-                        console.log(currentPage);
+                        
                        
                        }
                     
