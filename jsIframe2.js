@@ -543,7 +543,7 @@ window.addEventListener("load",function(){
            
             for(var i = 0;i<currentPage.upgrades.length;i++){
                 
-               debugUpgradeElement.appendChild(new DebugElement(currentPage.upgrades[i]).elem);
+               debugUpgradeElement.appendChild(new DebugElement(currentPage.upgrades[i]).elem,i);
                 
             }
             
@@ -552,9 +552,11 @@ window.addEventListener("load",function(){
     }
     
     
-    function DebugElement(upg){
+    function DebugElement(upg,index){
         
         this.elem = document.createElement("div");
+        
+        var elem = this.elem
         
         this.elem.className = "UpgElem";
         
@@ -697,6 +699,20 @@ window.addEventListener("load",function(){
             
         }
         
+        this.del = document.createElement("button")
+        
+        this.del.className = "elemValue"
+        
+        this.del.innerHTML="delete this"
+        
+        this.del.onclick = function(){
+            
+            currentPage.upgrades.splice(index,1)
+            
+            debugUpgradeElement.removeChild(elem)
+            
+        }
+        
         
         
         //this.text.style="flex:1 0 auto;"
@@ -708,7 +724,7 @@ window.addEventListener("load",function(){
         this.elem.appendChild(this.color)
         this.elem.appendChild(this.font)
         this.elem.appendChild(this.boxwh)
-        
+        this.elem.appendChild(this.del)
         
         
         
