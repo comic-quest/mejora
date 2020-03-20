@@ -97,6 +97,28 @@ window.addEventListener("load",function(){
     var time = 0;
         
     
+    function parseUpgrades(text){
+        
+        var data = text; //??? cosas supongo
+        
+        var arr = [];
+        
+        for(var i = 0;i<data.length;i++){
+            
+            if(data[i].text=="CQ"){
+               
+                data[i].text = "CQ \n "+pickRandomText();
+                
+               }
+            
+            arr[i] = new Mejora(data[i].x,data[i].y,data[i].w,data[i].h,new TextBox(data[i].text,data[i].boxw,data[i].boxh,data[i].spacing,data[i].font,data[i].color))
+            
+        }
+        
+        return arr
+        
+    }
+    
     
     function Mejora(x,y,w,h,box){
         this.x = x;
@@ -344,7 +366,7 @@ window.addEventListener("load",function(){
     
     var mejoras = [];
     
-    
+    /*
     mejoras.push(new Mejora(166,106,48,59,new TextBox("Puzzles: \n A partir de ahora las salas de la mazmorra pueden contener rompecabezas",150,70,25))) //P
     
     mejoras.push(new Mejora(76,137,47,48,new TextBox("Premios: \n añade recompensas al final de los combates",200,70,25))) //PN
@@ -366,12 +388,15 @@ window.addEventListener("load",function(){
     mejoras.push(new Mejora(167,269,49,58,new TextBox("Combate: \n Date de leches contra los enemigos gracias a esta mejora",150,70,25))) //COM
     
     mejoras.push(new Mejora(302,171,64,94,new TextBox("CQ: \n "+pickRandomText(),175,5,25))) //CQ
+    */
     
+    mejoras = parseUpgrades([{"x":166,"y":102,"w":48,"h":59,"text":"Puzzles: \n A partir de ahora las salas de la mazmorra pueden contener rompecabezas","color":"red","boxw":150,"boxh":70,"spacing":25},{"x":76,"y":132,"w":47,"h":48,"text":"Premios: \n añade recompensas al final de los combates","color":"red","boxw":200,"boxh":70,"spacing":25},{"x":73,"y":214,"w":46,"h":45,"text":"Tienda: \n Añade salas con tienda a la mazmorra","color":"red","boxw":150,"boxh":70,"spacing":25},{"x":15,"y":170,"w":47,"h":46,"text":"Salas del tesoro: \n Añade salas con cofre al repertorio de la mazmorra","color":"red","boxw":250,"boxh":70,"spacing":25},{"x":19,"y":263,"w":47,"h":46,"text":"Objetos: \n Con esta mejora puedes encontrar diferentes objetos en la mazmorra y guardarlos en tu inventario","color":"red","boxw":200,"boxh":70,"spacing":25},{"x":57,"y":322,"w":46,"h":47,"text":"Nivel: \n Sube de nivel, adquiere habilidades y asesina a todo lo que se oponga a ti","color":"red","boxw":250,"boxh":70,"spacing":25},{"x":18,"y":379,"w":47,"h":46,"text":"Música de combate: \n Ahora sonará un tema de combate cuando estés enzarzado en una disputa","color":"red","boxw":280,"boxh":70,"spacing":15},{"x":167,"y":185,"w":48,"h":58,"text":"Salas: \n Añade variedad a las habitaciones de la mazmorra","color":"red","boxw":150,"boxh":70,"spacing":25},{"x":75,"y":61,"w":48,"h":48,"text":"Pistas: \n ¿Atascado? esta mejora te otorga la posibilidad de comprar una pista por Comic Coins","color":"red","boxw":200,"boxh":70,"spacing":25},{"x":167,"y":265,"w":49,"h":58,"text":"Combate: \n Date de leches contra los enemigos gracias a esta mejora","color":"red","boxw":150,"boxh":70,"spacing":25},{"x":302,"y":167,"w":64,"h":94,"text":"CQ","color":"red","boxw":175,"boxh":5,"spacing":25}])
+    
+
     upgradeArray.push([...mejoras])
     
-    mejoras = [];
+    mejoras = parseUpgrades([{"x":312,"y":106,"w":54,"h":45,"text":"Colores primarios: \\n Añade el rojo, azul y verde a los paneles","color":"red","boxw":250,"boxh":72,"spacing":16},{"x":200,"y":50,"w":0,"h":0,"text":"Esto es un texto de prueba.","color":"red","boxw":110,"boxh":50,"spacing":15},{"x":312,"y":224,"w":56,"h":51,"text":"¡Paneles animados!","color":"#ffffff","boxw":120,"boxh":40,"spacing":15},{"x":32,"y":225,"w":32,"h":28,"text":"Descripciones: \\n Examina los objetos y obtén una descripción detallada de sus características","color":"red","boxw":250,"boxh":115,"spacing":18},{"x":64,"y":253,"w":0,"h":0,"text":"Esto es un texto de prueba.","color":"red","boxw":110,"boxh":50,"spacing":15},{"x":23,"y":175,"w":31,"h":30,"text":"Dialogos: \\n Entabla conversación con otros individuos","color":"red","boxw":160,"boxh":100,"spacing":18},{"x":92,"y":67,"w":54,"h":50,"text":"Fabrica de monedas: \\n Aumenta el número de monedas por página","color":"red","boxw":240,"boxh":85,"spacing":17},{"x":187,"y":28,"w":55,"h":52,"text":"Intermedios: \\n Interrumpe la acción para ir a otro punto de la historia","color":"red","boxw":170,"boxh":120,"spacing":16},{"x":141,"y":143,"w":66,"h":93,"text":"CQ","color":"red","boxw":150,"boxh":90,"spacing":16},{"x":237,"y":152,"w":41,"h":71,"text":"Resolución: \\n Aumenta el tamaño de los paneles","color":"red","boxw":150,"boxh":80,"spacing":17},{"x":396,"y":226,"w":54,"h":47,"text":"Flash: \\n ¡Desbloquea los videos!","color":"red","boxw":170,"boxh":60,"spacing":17},{"x":376,"y":113,"w":34,"h":28,"text":"Colores secundarios: \\n Añade el resto de colores a los paneles","color":"#ff0000","boxw":250,"boxh":80,"spacing":17}]);
     
-    mejoras.push(new Mejora(166,106,48,59,new TextBox("Puzzles: \n A partir de ahora las salas de la mazmorra pueden contener rompecabezas",150,70,25))) //P
     
     upgradeArray.push([...mejoras])
     
@@ -699,6 +724,23 @@ window.addEventListener("load",function(){
             
         }
         
+        this.spacing = document.createElement("INPUT")
+        
+        this.spacing.setAttribute("type","text")
+        
+        this.spacing.className="elemValue"
+        
+        this.spacing.value = upg.box.spacing;
+        
+        this.spacing.onchange = function(){
+            
+            var value = Number(this.value);
+            
+            upg.box.spacing = value;
+            upg.box.computeLines()
+            
+        }
+        
         this.del = document.createElement("button")
         
         this.del.className = "elemValue"
@@ -725,7 +767,11 @@ window.addEventListener("load",function(){
             
             for(var i = 0;i<currentPage.upgrades.length;i++){
                 var u = currentPage.upgrades[i];
-               arr.push({x:u.x,y:u.y,w:u.w,h:u.h,text:u.box.text,color:u.box.color,boxw:u.box.w,boxh:u.box.h,font:u.boxfont})
+                
+                var newText = u.box.text.replace(/'/,"\\'")
+                    
+                
+               arr.push({x:u.x,y:u.y,w:u.w,h:u.h,text:newText,color:u.box.color,boxw:u.box.w,boxh:u.box.h,font:u.font,spacing:u.box.spacing})
                 
             }
             
@@ -744,6 +790,7 @@ window.addEventListener("load",function(){
         this.elem.appendChild(this.color)
         this.elem.appendChild(this.font)
         this.elem.appendChild(this.boxwh)
+        this.elem.appendChild(this.spacing)
         this.elem.appendChild(this.del)
         this.elem.appendChild(this.sub)
         
