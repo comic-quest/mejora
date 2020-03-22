@@ -20,6 +20,7 @@ var cqTexts = "CQ no fabrica para otras marcas\nCambiando de artista desde 2017\
 
 cqTexts = cqTexts.split("\n");
 
+
 function pickRandomText(){
     
     return cqTexts[Math.floor(Math.random()*cqTexts.length)]
@@ -29,25 +30,49 @@ function pickRandomText(){
 
 window.addEventListener("load",function(){
     
-    var debug = true;
+    var debug
     
     if(window.self !== window.top){
               window.parent.postMessage("hideNext","*")
                console.log("click!")
+         debug = false;
+              }else{
+                  debug=true;
               }
+    
+    var urlParameters = {}
 
-    var hrefIndex = document.location.href.indexOf("?p")
+    const queryString = window.location.search;
     
-    var pageNumber
+    if(queryString){
+       console.log("live")
+        
+        const urlParams = new URLSearchParams(queryString);
+        
+        for(var pair of urlParams.entries()) {
+        urlParameters[pair[0]] = pair[1]
+}
+        
+       }
+    console.log(urlParameters)
     
-    if(hrefIndex== -1){
+   var coins;
+    
+    if(urlParameters.p){
        
-        pageNumber=1;
+        
+        pageNumber = urlParameters.p
         
        }else{
            
-           pageNumber = document.location.href.substring(document.location.href.indexOf("?p")+3)
+         pageNumber=0;  
            
+       }
+    
+    if(urlParameters.coins){
+       coins=urlParameters.coins;
+       }else{
+           coins=0;
        }
     
     
@@ -834,6 +859,28 @@ window.addEventListener("load",function(){
                 ctx.fillRect(0,0,canvas.width,canvas.height);
                 
                     currentPage.renderPage();
+                
+                
+                ctx.strokeStyle="white";
+                ctx.lineWidth=2.5;
+                ctx.beginPath();
+                
+                ctx.rect(2.5,2.5,50,50);
+                
+                ctx.closePath();
+                ctx.stroke();
+                
+                ctx.font = "38px Arial";
+                
+                ctx.fillStyle="white";
+                
+                var measure = ctx.measureText(coins+"");
+                
+                textPosX =  25 - measure.actualBoundingBoxRight/2
+                
+                var textPosY = 25 + (measure.actualBoundingBoxDescent + measure.actualBoundingBoxAscent)/2 //25 es la posicion del texto broh
+                
+                ctx.fillText(coins+"",textPosX,textPosY);
                 
                 for(var i = 0;i<currentPage.upgrades.length;i++){
                     
