@@ -37,7 +37,7 @@ window.addEventListener("load",function(){
                console.log("click!")
          debug = false;
               }else{
-                  debug=true;
+                  debug=false;
               }
     
     var urlParameters = {}
@@ -145,14 +145,24 @@ window.addEventListener("load",function(){
     }
     
     
-    function Mejora(x,y,w,h,box){
+    function Mejora(x,y,w,h,box,maxLevel){
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
+        this.level = 0;
+        if(maxLevel){
+            this.maxLevel=maxLevel;
+        }else{
+            this.maxLevel = 1;
+        }
+
         this.click = function(){
            if(window.parent){
               window.parent.postMessage("nextPage","*")
+               if(this.level<this.maxLevel){
+                  this.level++
+                  }
                console.log("click!")
               }
            
@@ -884,9 +894,19 @@ window.addEventListener("load",function(){
                 
                 for(var i = 0;i<currentPage.upgrades.length;i++){
                     
-                    currentPage.upgrades[i].drawDebug();
+                    let upg = currentPage.upgrades[i]
+                    
+                    if(debug){
+                    upg.drawDebug();
+                    }
+                    
+                    ctx.fillStyle="white";
+                    ctx.font="13px Arial"
+                    ctx.fillText(upg.level+"/"+upg.maxLevel,upg.x+3,upg.getPosition()+15)
+
                     
                 }
+                
                 
                 if(mouseOn){
                     
