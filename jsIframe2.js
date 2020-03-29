@@ -136,7 +136,13 @@ window.addEventListener("load",function(){
                 
                }
             
-            arr[i] = new Mejora(data[i].x,data[i].y,data[i].w,data[i].h,new TextBox(data[i].text,data[i].boxw,data[i].boxh,data[i].spacing,data[i].font,data[i].color))
+            if(!data[i].maxLevel){
+               
+                data[i].maxLevel = 1;
+                
+               }
+            
+            arr[i] = new Mejora(data[i].x,data[i].y,data[i].w,data[i].h,new TextBox(data[i].text,data[i].boxw,data[i].boxh,data[i].spacing,data[i].font,data[i].color),data[i].maxLevel)
             
         }
         
@@ -401,36 +407,14 @@ window.addEventListener("load",function(){
     
     var mejoras = [];
     
-    /*
-    mejoras.push(new Mejora(166,106,48,59,new TextBox("Puzzles: \n A partir de ahora las salas de la mazmorra pueden contener rompecabezas",150,70,25))) //P
+ 
     
-    mejoras.push(new Mejora(76,137,47,48,new TextBox("Premios: \n añade recompensas al final de los combates",200,70,25))) //PN
-    
-    mejoras.push(new Mejora(73,218,46,45,new TextBox("Tienda: \n Añade salas con tienda a la mazmorra",150,70,25))) //T 
-    
-    mejoras.push(new Mejora(15,175,47,46,new TextBox("Salas del tesoro: \n Añade salas con cofre al repertorio de la mazmorra",250,70,25))) //ST
-    
-    mejoras.push(new Mejora(19,266,47,46,new TextBox("Objetos: \n Con esta mejora puedes encontrar diferentes objetos en la mazmorra y guardarlos en tu inventario",200,70,25))) //OBJ 
-      
-    mejoras.push(new Mejora(57,325,46,47,new TextBox("Nivel: \n Sube de nivel, adquiere habilidades y asesina a todo lo que se oponga a ti",250,70,25))) //LV
-    
-    mejoras.push(new Mejora(18,383,47,46,new TextBox("Música de combate: \n Ahora sonará un tema de combate cuando estés enzarzado en una disputa",280,70,15,"16px Courier New"))) //CM
-    
-    mejoras.push(new Mejora(167,189,48,58,new TextBox("Salas: \n Añade variedad a las habitaciones de la mazmorra",150,70,25))) //S
-    
-    mejoras.push(new Mejora(75,65,48,48,new TextBox("Pistas: \n ¿Atascado? esta mejora te otorga la posibilidad de comprar una pista por Comic Coins",200 ,70,25))) //PS
-    
-    mejoras.push(new Mejora(167,269,49,58,new TextBox("Combate: \n Date de leches contra los enemigos gracias a esta mejora",150,70,25))) //COM
-    
-    mejoras.push(new Mejora(302,171,64,94,new TextBox("CQ: \n "+pickRandomText(),175,5,25))) //CQ
-    */
-    
-    mejoras = parseUpgrades([{"x":166,"y":102,"w":48,"h":59,"text":"Puzzles: \n A partir de ahora las salas de la mazmorra pueden contener rompecabezas","color":"red","boxw":150,"boxh":70,"spacing":25},{"x":76,"y":132,"w":47,"h":48,"text":"Premios: \n añade recompensas al final de los combates","color":"red","boxw":200,"boxh":70,"spacing":25},{"x":73,"y":214,"w":46,"h":45,"text":"Tienda: \n Añade salas con tienda a la mazmorra","color":"red","boxw":150,"boxh":70,"spacing":25},{"x":15,"y":170,"w":47,"h":46,"text":"Salas del tesoro: \n Añade salas con cofre al repertorio de la mazmorra","color":"red","boxw":250,"boxh":70,"spacing":25},{"x":19,"y":263,"w":47,"h":46,"text":"Objetos: \n Con esta mejora puedes encontrar diferentes objetos en la mazmorra y guardarlos en tu inventario","color":"red","boxw":200,"boxh":70,"spacing":25},{"x":57,"y":322,"w":46,"h":47,"text":"Nivel: \n Sube de nivel, adquiere habilidades y asesina a todo lo que se oponga a ti","color":"red","boxw":250,"boxh":70,"spacing":25},{"x":18,"y":379,"w":47,"h":46,"text":"Música de combate: \n Ahora sonará un tema de combate cuando estés enzarzado en una disputa","color":"red","boxw":280,"boxh":70,"spacing":15},{"x":167,"y":185,"w":48,"h":58,"text":"Salas: \n Añade variedad a las habitaciones de la mazmorra","color":"red","boxw":150,"boxh":70,"spacing":25},{"x":75,"y":61,"w":48,"h":48,"text":"Pistas: \n ¿Atascado? esta mejora te otorga la posibilidad de comprar una pista por Comic Coins","color":"red","boxw":200,"boxh":70,"spacing":25},{"x":167,"y":265,"w":49,"h":58,"text":"Combate: \n Date de leches contra los enemigos gracias a esta mejora","color":"red","boxw":150,"boxh":70,"spacing":25},{"x":302,"y":167,"w":64,"h":94,"text":"CQ","color":"red","boxw":175,"boxh":5,"spacing":25}])
+    mejoras = parseUpgrades([{"x":166,"y":102,"w":48,"h":59,"text":"Puzzles: \n A partir de ahora las salas de la mazmorra pueden contener rompecabezas","color":"red","boxw":150,"boxh":70,"spacing":25,"maxLevel":2},{"x":76,"y":132,"w":47,"h":48,"text":"Premios: \n añade recompensas al final de los combates","color":"red","boxw":200,"boxh":70,"spacing":25,"maxLevel":2},{"x":73,"y":214,"w":46,"h":45,"text":"Tienda: \n Añade salas con tienda a la mazmorra","color":"red","boxw":150,"boxh":70,"spacing":25},{"x":15,"y":170,"w":47,"h":46,"text":"Salas del tesoro: \n Añade salas con cofre al repertorio de la mazmorra","color":"red","boxw":250,"boxh":70,"spacing":25},{"x":19,"y":263,"w":47,"h":46,"text":"Objetos: \n Con esta mejora puedes encontrar diferentes objetos en la mazmorra y guardarlos en tu inventario","color":"red","boxw":200,"boxh":70,"spacing":25},{"x":57,"y":322,"w":46,"h":47,"text":"Nivel: \n Sube de nivel, adquiere habilidades y asesina a todo lo que se oponga a ti","color":"red","boxw":250,"boxh":70,"spacing":25},{"x":18,"y":379,"w":47,"h":46,"text":"Música de combate: \n Ahora sonará un tema de combate cuando estés enzarzado en una disputa","color":"red","boxw":280,"boxh":70,"spacing":15},{"x":167,"y":185,"w":48,"h":58,"text":"Salas: \n Añade variedad a las habitaciones de la mazmorra","color":"red","boxw":150,"boxh":70,"spacing":25,"maxLevel":3},{"x":75,"y":61,"w":48,"h":48,"text":"Pistas: \n ¿Atascado? esta mejora te otorga la posibilidad de comprar una pista por Comic Coins","color":"red","boxw":200,"boxh":70,"spacing":25},{"x":167,"y":265,"w":49,"h":58,"text":"Combate: \n Date de leches contra los enemigos gracias a esta mejora","color":"red","boxw":150,"boxh":70,"spacing":25},{"x":302,"y":167,"w":64,"h":94,"text":"CQ","color":"red","boxw":175,"boxh":5,"spacing":25}])
     
 
     upgradeArray.push([...mejoras])
     
-    mejoras = parseUpgrades([{"x":312,"y":106,"w":54,"h":45,"text":"Colores primarios: \\n Añade el rojo, azul y verde a los paneles","color":"red","boxw":250,"boxh":72,"spacing":16},{"x":312,"y":224,"w":56,"h":51,"text":"¡Paneles animados!","color":"#ffffff","boxw":120,"boxh":40,"spacing":15},{"x":32,"y":225,"w":32,"h":28,"text":"Descripciones: \\n Examina los objetos y obtén una descripción detallada de sus características","color":"red","boxw":250,"boxh":115,"spacing":18},{"x":23,"y":175,"w":31,"h":30,"text":"Dialogos: \\n Entabla conversación con otros individuos","color":"red","boxw":160,"boxh":100,"spacing":18},{"x":92,"y":67,"w":54,"h":50,"text":"Fabrica de monedas: \\n Aumenta el número de monedas por página","color":"red","boxw":240,"boxh":85,"spacing":17},{"x":187,"y":28,"w":55,"h":52,"text":"Intermedios: \\n Interrumpe la acción para ir a otro punto de la historia","color":"red","boxw":170,"boxh":120,"spacing":16},{"x":141,"y":143,"w":66,"h":93,"text":"CQ","color":"red","boxw":150,"boxh":90,"spacing":16},{"x":237,"y":152,"w":41,"h":71,"text":"Resolución: \\n Aumenta el tamaño de los paneles","color":"red","boxw":150,"boxh":80,"spacing":17},{"x":396,"y":226,"w":54,"h":47,"text":"Flash: \\n ¡Desbloquea los videos!","color":"red","boxw":170,"boxh":60,"spacing":17},{"x":376,"y":113,"w":34,"h":28,"text":"Colores secundarios: \\n Añade el resto de colores a los paneles","color":"#ff0000","boxw":250,"boxh":80,"spacing":17}]);
+    mejoras = parseUpgrades([{"x":312,"y":106,"w":54,"h":45,"text":"Colores primarios: \\n Añade el rojo, azul y verde a los paneles","color":"red","boxw":250,"boxh":72,"spacing":16},{"x":312,"y":224,"w":56,"h":51,"text":"¡Paneles animados!","color":"#ffffff","boxw":120,"boxh":40,"spacing":15},{"x":32,"y":225,"w":32,"h":28,"text":"Descripciones: \\n Examina los objetos y obtén una descripción detallada de sus características","color":"red","boxw":250,"boxh":115,"spacing":18},{"x":23,"y":175,"w":31,"h":30,"text":"Dialogos: \\n Entabla conversación con otros individuos","color":"red","boxw":160,"boxh":100,"spacing":18},{"x":92,"y":67,"w":54,"h":50,"text":"Fabrica de monedas: \\n Aumenta el número de monedas por página","color":"red","boxw":240,"boxh":85,"spacing":17,"maxLevel":5},{"x":187,"y":28,"w":55,"h":52,"text":"Intermedios: \\n Interrumpe la acción para ir a otro punto de la historia","color":"red","boxw":170,"boxh":120,"spacing":16},{"x":141,"y":143,"w":66,"h":93,"text":"CQ","color":"red","boxw":150,"boxh":90,"spacing":16},{"x":237,"y":152,"w":41,"h":71,"text":"Resolución: \\n Aumenta el tamaño de los paneles","color":"red","boxw":150,"boxh":80,"spacing":17,"maxLevel":3},{"x":396,"y":226,"w":54,"h":47,"text":"Flash: \\n ¡Desbloquea los videos!","color":"red","boxw":170,"boxh":60,"spacing":17},{"x":376,"y":113,"w":34,"h":28,"text":"Colores secundarios: \\n Añade el resto de colores a los paneles","color":"#ff0000","boxw":250,"boxh":80,"spacing":17}]);
     
     
     upgradeArray.push([...mejoras])
