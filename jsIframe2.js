@@ -16,7 +16,7 @@ if ( !window.requestAnimationFrame ) {
 
 }
 
-var cqTexts = "CQ no fabrica para otras marcas\nCambiando de artista desde 2017\nHecho en el garaje de erizo\nErizo no tiene garaje\nUniverse approves\nThe bite of 87\nall your FACM are belong to us\n¡Hola, mundo!\nSOLO\nHola, Chess\nLo importante no son los Favs\nFunniest shit i've ever seen\nLa Fundación Áurea no hizo nada malo\nComo Speedwagon pero en alien\nThe end of Comic Machine\nCQ 1.11: You are (not) a furry\nPrueba mi fursona\n¡Hey, CQ, Reader here!\nAtrapados en casa\nÉl siempre ve\nNo tenemos los permisos en orden\nEvadimos impuestos\nArael no es canon aquí"
+var cqTexts = "CQ no fabrica para otras marcas\nCambiando de artista desde 2017\nHecho en el garaje de erizo\nErizo no tiene garaje\nUniverse approves\nThe bite of 87\nall your FACM are belong to us\n¡Hola, mundo!\nSOLO\nHola, Chess\nLo importante no son los Favs\nFunniest shit i've ever seen\nLa Fundación Áurea no hizo nada malo\nComo Speedwagon pero en alien\nThe end of Comic Machine\nCQ 1.11: You are (not) a furry\nPrueba mi fursona\n¡Hey, CQ, Reader here!\nAtrapados en casa\nÉl siempre ve\nNo tenemos los permisos en orden\nEvadimos impuestos\nArael no es canon aquí\nHow do you like that,Mr Obama?\nI pissed on the moon, you idiot!"
 
 cqTexts = cqTexts.split("\n");
 
@@ -168,7 +168,13 @@ window.addEventListener("load",function(){
               window.parent.postMessage("nextPage","*")
                if(this.level<this.maxLevel){
                   this.level++
+                   this.box.level = this.level;
+                   if(this.level === this.maxLevel){
+                      this.box.upgColor = "red";
+                      }
                   }
+               
+               
                console.log("click!")
               }
            
@@ -176,9 +182,13 @@ window.addEventListener("load",function(){
         if(box){
            this.box = box;
             this.box.parent = this;
+            this.box.level = this.level;
+            this.box.maxLevel = this.maxLevel;
            }else{
                this.box = new TextBox("Esto es un texto de prueba.",110,50,15,undefined,"red");
                this.box.parent = this;
+               this.box.level = this.level;
+               this.box.maxLevel = this.maxLevel;
            }
         
         this.drawDebug = function(){
@@ -207,7 +217,8 @@ window.addEventListener("load",function(){
     }
     
     
-    function TextBox(text,w,h,spacing,font,color){
+    function TextBox(text,w,h,spacing,font,color,upgFont){
+        this.textBoxOffset = 25;
         this.w = w;
         this.h = h;
         this.lines = [];
@@ -220,12 +231,23 @@ window.addEventListener("load",function(){
                this.font = "20px Courier New"
            }
         
+        if(upgFont){
+            
+            this.upgradeFont = upgFont;
+            
+        }else{
+            
+            this.upgradeFont = "17px Courier New"
+            
+        }
+        
         if(color){
            this.color = color;
            }else{
                this.color = "red";
            }
         
+        this.upgColor = "white";
         
         this.computeLines = function(){
         
@@ -362,16 +384,27 @@ window.addEventListener("load",function(){
             ctx.beginPath();
         ctx.fillStyle="white";
         
-        ctx.rect(x-3,y-3,this.w+3,Math.max(this.textHeight+3,this.h+3));
+        ctx.rect(x-3,y-3,this.w+3,Math.max(this.textHeight+3+this.textBoxOffset,this.h+3+this.textBoxOffset));
             ctx.closePath();
         ctx.fill();
             
                 ctx.beginPath();
         ctx.fillStyle="black";        
         
-        ctx.rect(x,y,this.w-3,Math.max(this.textHeight-3,this.h-3));
+        ctx.rect(x,y,this.w-3,Math.max(this.textHeight-3+this.textBoxOffset,this.h-3+this.textBoxOffset));
             ctx.closePath();
         ctx.fill();
+            
+            ctx.font = this.upgradeFont;
+            
+            ctx.fillStyle=this.upgColor;
+            
+            var levelString = this.level+"/"+this.maxLevel
+            
+            var levelHeight = ctx.measureText(levelString).actualBoundingBoxAscent
+            
+            ctx.fillText(levelString,x+3,y+3+levelHeight);
+            
             for(var i = 0 ; i < this.lines.length ; i++){
                 if(i==0){
                    ctx.fillStyle=this.color;
@@ -379,8 +412,9 @@ window.addEventListener("load",function(){
                        ctx.fillStyle="white";
                    }
                 
+                
                 ctx.font = this.font;
-                ctx.fillText(this.lines[i].text,x+3,(y+this.spacing*i)+this.lines[i].lineHeight+3); //quitar el +3 alaverga me da sida de verlo
+                ctx.fillText(this.lines[i].text,x+3,(y+this.textBoxOffset+this.spacing*i)+this.lines[i].lineHeight+3); //quitar el +3 alaverga me da sida de verlo
                 
                 
             }
@@ -429,7 +463,7 @@ window.addEventListener("load",function(){
         
         new Layer("fondos/mejoras-2-1.png",0,1,5,0),
         
-        new Layer("fondos/mejoras-2-2.png",Math.PI/4,1,5,0)
+        new Layer("fondos/mejoras-2-2.png",Math.PI/8,1,5,0)
         
     ]));
     
@@ -884,9 +918,7 @@ window.addEventListener("load",function(){
                     upg.drawDebug();
                     }
                     
-                    ctx.fillStyle="white";
-                    ctx.font="13px Arial"
-                    ctx.fillText(upg.level+"/"+upg.maxLevel,upg.x+3,upg.getPosition()+15)
+                    
 
                     
                 }
