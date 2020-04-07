@@ -941,9 +941,16 @@ window.addEventListener("load",function(){
                        if(textPos.x+mouseOn.box.w>canvas.width){
                            
                            
-                           textPos.x -= (mouseOn.box.w+camara.offsetX*2)
+                           textPos.x -= (mouseOn.box.w+camara.offsetY*2)
                           
                           }
+                        if(textPos.y+mouseOn.box.h+mouseOn.box.textBoxOffset>canvas.height || textPos.y+mouseOn.box.textHeight+mouseOn.box.textBoxOffset>canvas.height){
+                           
+                           
+                           textPos.y -= (mouseOn.box.h+mouseOn.box.textBoxOffset+3+camara.offsetY*2)
+                          
+                          }
+                        
                          mouseOn.box.drawTextBox(textPos.x,textPos.y);
                         
                        }
