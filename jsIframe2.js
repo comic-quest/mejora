@@ -922,7 +922,7 @@ window.addEventListener("load",function(){
                        
                        ctx.globalCompositeOperation = "multiply"
                     
-                    ctx.fillStyle="rgba(255,0,0,1)";
+                    ctx.fillStyle="darkred";
                     
                     ctx.fillRect(upg.x-3,upg.getPosition()-3,upg.w+3,upg.h+4)
 
