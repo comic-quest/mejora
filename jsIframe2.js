@@ -477,7 +477,15 @@ window.addEventListener("load",function(){
         
     ]));
     
-    startLoad();
+    var ccoinImg = new Image();
+    
+    ccoinImg.onload = function(){
+        
+        startLoad();
+        
+    }
+    
+    ccoinImg.src = "fondos/ccoin.png"
     
     console.log(loadingCount,loadedCount);
     
@@ -606,8 +614,11 @@ window.addEventListener("load",function(){
         
         canvas.width = paginas[n].layers[0].image.width
         canvas.height = paginas[n].layers[0].image.height
-        
+    
+        window.parent.postMessage("hideNext","*")
     }
+    
+    
     
     function updateUpgrades(){
         
@@ -857,7 +868,7 @@ window.addEventListener("load",function(){
         function init(){ ///////////////////////////////////////////   init
             
             requestAnimationFrame(draw);
-            
+            changePage(pageNumber);
         
             if(debug){
                
@@ -876,7 +887,7 @@ window.addEventListener("load",function(){
                 
                 requestAnimationFrame(draw);
                 
-                changePage(pageNumber);
+                
                 
                         now = new Date();
                 time = now.getTime()-startTime.getTime();
@@ -888,7 +899,7 @@ window.addEventListener("load",function(){
                 
                     currentPage.renderPage();
                 
-                
+             /*   
                 ctx.strokeStyle="white";
                 ctx.lineWidth=2.5;
                 ctx.beginPath();
@@ -897,18 +908,22 @@ window.addEventListener("load",function(){
                 
                 ctx.closePath();
                 ctx.stroke();
+                */
                 
-                ctx.font = "38px Arial";
+                ctx.font = "40px Courier New";
                 
                 ctx.fillStyle="white";
                 
                 var measure = ctx.measureText(coins+"");
                 
-                textPosX =  25 - measure.actualBoundingBoxRight/2
+                textPosX =  50
                 
-                var textPosY = 25 + (measure.actualBoundingBoxDescent + measure.actualBoundingBoxAscent)/2 //25 es la posicion del texto broh
+                var textPosY = 23 + (measure.actualBoundingBoxDescent + measure.actualBoundingBoxAscent)/2 //25 es la posicion del texto broh
                 
                 ctx.fillText(coins+"",textPosX,textPosY);
+                ctx.imageSmoothingEnabled = false;
+                
+                ctx.drawImage(ccoinImg,0,0)
                 
                 for(var i = 0;i<currentPage.upgrades.length;i++){
                     
@@ -924,7 +939,7 @@ window.addEventListener("load",function(){
                     
                     ctx.fillStyle="darkred";
                     
-                    ctx.fillRect(upg.x-3,upg.getPosition()-3,upg.w+3,upg.h+4)
+                    ctx.fillRect(upg.x-3,upg.getPosition()-3,upg.w+3,upg.h+6)
 
                     ctx.globalCompositeOperation = "source-over"
                        

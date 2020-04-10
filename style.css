@@ -3,8 +3,6 @@ body,html{
     margin:0;
     
     background-color:transparent;
-    
-overflow:hidden;
     float:left;
     
 }
@@ -12,7 +10,8 @@ overflow:hidden;
 #canvas{
     
     border-radius:7px;
-    
+    width:auto;
+    height:auto;
     
 }
 
