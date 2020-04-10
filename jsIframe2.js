@@ -33,7 +33,7 @@ window.addEventListener("load",function(){
     var debug
     
     if(window.self !== window.top){
-              window.parent.postMessage("hideNext","*")
+              window.parent.postMessage({name:"hideNext"},"*")
                console.log("click!")
          debug = false;
               }else{
@@ -165,7 +165,7 @@ window.addEventListener("load",function(){
 
         this.click = function(){
            if(window.parent){
-              window.parent.postMessage("nextPage","*")
+              window.parent.postMessage({name:"nextPage"},"*")
                if(this.level<this.maxLevel){
                   this.level++
                    this.box.level = this.level;
@@ -614,8 +614,11 @@ window.addEventListener("load",function(){
         
         canvas.width = paginas[n].layers[0].image.width
         canvas.height = paginas[n].layers[0].image.height
+        var w = document.body.scrollWidth;
+        var h = document.body.scrollHeight;
     
-        window.parent.postMessage("resizeIframe","*")
+        window.parent.postMessage({name:"resizeIframe",w:w,h:h},"*")
+        
     }
     
     

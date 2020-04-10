@@ -166,10 +166,10 @@ var upFrame = document.createElement("iframe");
     upFrame.id="upFrame";
     
     
-    function changeIframeSize(){
+    function changeIframeSize(w,h){
         
-        upFrame.width = upFrame.contentWindow.document.body.scrollWidth;
-        upFrame.height = upFrame.contentWindow.document.body.scrollHeight;
+        upFrame.width = w
+        upFrame.height = h
         
     }
     
@@ -218,23 +218,23 @@ function receiveMessage(event) {
   if (!event.origin.includes("https://comic-quest.github.io"))
     return;
     
-    if(event.data==="nextPage"){
+    if(event.data.name==="nextPage"){
         if(links){
             links.style.visibility="visible"
            }
       
        }
     
-    if(event.data==="hideNext"){
+    if(event.data.name==="hideNext"){
         if(links){
             links.style.visibility="hidden"
            }
        
        }
     
-    if(event.data === "resizeIframe"){
+    if(event.data.name === "resizeIframe"){
        
-        changeIframeSize();
+        changeIframeSize(event.data.w,event.data.h);
         
        }
 
