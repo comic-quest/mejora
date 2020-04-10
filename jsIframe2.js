@@ -615,7 +615,7 @@ window.addEventListener("load",function(){
         canvas.width = paginas[n].layers[0].image.width
         canvas.height = paginas[n].layers[0].image.height
     
-        window.parent.postMessage("hideNext","*")
+        window.parent.postMessage("resizeIframe","*")
     }
     
     
