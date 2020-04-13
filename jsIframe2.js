@@ -142,7 +142,15 @@ window.addEventListener("load",function(){
                 
                }
             
-            arr[i] = new Mejora(data[i].x,data[i].y,data[i].w,data[i].h,new TextBox(data[i].text,data[i].boxw,data[i].boxh,data[i].spacing,data[i].font,data[i].color),data[i].maxLevel)
+            if(data[i].text){
+               arr[i] = new Mejora(data[i].x,data[i].y,data[i].w,data[i].h,new TextBox(data[i].text,data[i].boxw,data[i].boxh,data[i].spacing,data[i].font,data[i].color),data[i].maxLevel)
+               }else{
+                   
+                arr[i] = new Mejora(data[i].x,data[i].y,data[i].w,data[i].h)
+                   
+               }
+            
+            
             
         }
         
@@ -153,9 +161,12 @@ window.addEventListener("load",function(){
     
     function Mejora(x,y,w,h,box,maxLevel){
         this.x = x;
-        this.y = y;
+        this.y2 = y;
         this.w = w;
         this.h = h;
+        
+
+        
         this.level = 0;
         if(maxLevel){
             this.maxLevel=maxLevel;
@@ -184,11 +195,6 @@ window.addEventListener("load",function(){
             this.box.parent = this;
             this.box.level = this.level;
             this.box.maxLevel = this.maxLevel;
-           }else{
-               this.box = new TextBox("Esto es un texto de prueba.",110,50,15,undefined,"red");
-               this.box.parent = this;
-               this.box.level = this.level;
-               this.box.maxLevel = this.maxLevel;
            }
         
         this.drawDebug = function(){
@@ -202,9 +208,24 @@ window.addEventListener("load",function(){
             
         }
         
-        this.getPosition = function(){return this.y+this.parent.layers[1].getPosition();}
+        this.getPosition = function(){
+            //console.log(this.y,this.y2,this.parent.layers[1].getPosition());
+            
+            return this.y2+this.parent.layers[1].getPosition()
+        
+        }
+        
+        
         
     }
+
+
+Object.defineProperties(Mejora.prototype, {
+        y: {
+             get: function()    { return this.getPosition(); }
+            ,set: function(val) { this.y2=val;   }
+        }
+});
     
     
     
@@ -255,7 +276,7 @@ window.addEventListener("load",function(){
         
         var words = this.text.split(" ");
             
-            console.log(words)
+            //console.log(words)
         
         var textBuffer = "";
         
@@ -459,23 +480,132 @@ window.addEventListener("load",function(){
     
     paginas.push(new Pagina(upgradeArray[0],[
     
-        new Layer("fondos/mejoras-2-0.png",0,1,0,0),
+        new Layer("fondos/mejoras-2-0.png",0,1,0,50),
         
-        new Layer("fondos/mejoras-2-1.png",0,1,5,0),
+        new Layer("fondos/mejoras-2-1.png",0,1,5,50),
         
-        new Layer("fondos/mejoras-2-2.png",Math.PI/8,1,5,0)
+        new Layer("fondos/mejoras-2-2.png",Math.PI/8,1,5,50)
         
     ]));
+    
+    //{"x":0,"y":0,"w":190.5,"h":40}
+    var temp = new Mejora(0,0,190.5,40)
+    
+    temp.click = function(){
+        
+        changePage(0)
+        
+    }
+    
+    temp.parent = paginas[0]
+    
+    Object.defineProperties(temp, {
+        "y": {
+             "get": function() {return this.y2},
+             "set": function(val) {return this.y2}
+        }
+    });
+    
+    temp.getPosition = function(){
+        
+        return this.y2;
+        
+    }
+    
+    
+    paginas[0].upgrades.push(temp)
+    
+    temp = new Mejora(190.5,0,190.5,40)
+    
+    temp.click = function(){
+        
+        changePage(1)
+        
+    }
+    
+    temp.parent = paginas[0]
+    
+    Object.defineProperties(temp, {
+        "y": {
+             "get": function() {return this.y2},
+             "set": function(val) {return this.y2}
+        }
+    });
+    
+    temp.getPosition = function(){
+        
+        return this.y2;
+        
+    }
+    
+    paginas[0].upgrades.push(temp)
+    
+    
+    
+    
     
     paginas.push(new Pagina(upgradeArray[1],[
     
-        new Layer("fondos/mejoras-1-0.png",0,1,0,0),
+        new Layer("fondos/mejoras-1-0.png",0,1,0,50),
         
-        new Layer("fondos/mejoras-1-1.png",0,1,5,0),
+        new Layer("fondos/mejoras-1-1.png",0,1,5,50),
         
-        new Layer("fondos/mejoras-1-2.png",Math.PI/4,1,5,0)
+        new Layer("fondos/mejoras-1-2.png",Math.PI/4,1,5,50)
         
     ]));
+    
+    temp = new Mejora(0,0,266,40)
+    
+    temp.click = function(){
+        
+        changePage(0)
+        
+    }
+    
+    temp.parent = paginas[1]
+    
+    Object.defineProperties(temp, {
+        "y": {
+             "get": function() {return this.y2},
+             "set": function(val) {return this.y2}
+        }
+    });
+    
+    temp.getPosition = function(){
+        
+        return this.y2;
+        
+    }
+    
+    paginas[1].upgrades.push(temp)
+    
+    temp = new Mejora(266,0,266,40)
+    
+    temp.click = function(){
+        
+        changePage(1)
+        
+    }
+    
+    temp.parent = paginas[1]
+    
+    Object.defineProperties(temp, {
+        "y": {
+             "get": function() {return this.y2},
+             "set": function(val) {return this.y2}
+        }
+    });
+    
+    temp.getPosition = function(){
+        
+        return this.y2;
+        
+    }
+    
+    paginas[1].upgrades.push(temp)
+    
+    
+    
     
     var ccoinImg = new Image();
     
@@ -921,12 +1051,12 @@ window.addEventListener("load",function(){
                 
                 textPosX =  50
                 
-                var textPosY = 23 + (measure.actualBoundingBoxDescent + measure.actualBoundingBoxAscent)/2 //25 es la posicion del texto broh
+                var textPosY = 73 + (measure.actualBoundingBoxDescent + measure.actualBoundingBoxAscent)/2 //25 es la posicion del texto broh
                 
                 ctx.fillText(coins+"",textPosX,textPosY);
                 ctx.imageSmoothingEnabled = false;
                 
-                ctx.drawImage(ccoinImg,0,0)
+                ctx.drawImage(ccoinImg,0,50)
                 
                 for(var i = 0;i<currentPage.upgrades.length;i++){
                     
@@ -976,6 +1106,30 @@ window.addEventListener("load",function(){
                    
                     
                 }
+                //dibujar menu de arriba (hardcodeado porque estoy hasta los huevos)
+                
+                ctx.beginPath();
+                
+                ctx.rect(0,0,canvas.width/2,45);
+                
+                ctx.rect(canvas.width/2,0,canvas.width/2-1,45)
+                
+                ctx.strokeStyle="white";
+                
+                ctx.lineWidth=2.5
+                
+                ctx.stroke();
+                
+                ctx.closePath();
+                
+                ctx.font = "18px Courier New"
+                
+                ctx.fillStyle = "white"
+                
+                ctx.fillText("Mejoras Locales",5,30);
+                
+                ctx.fillText("Mejoras Globales",canvas.width/2+5,30);
+                
                 
                 
                 
@@ -1034,6 +1188,8 @@ window.addEventListener("load",function(){
                     
                         var upgPos = [debugX,debugY]
                         
+                        
+                        
                     if(w<0){
                        
                         upgPos[0]=e.offsetX
@@ -1051,7 +1207,8 @@ window.addEventListener("load",function(){
                         
                         var upg = new Mejora(upgPos[0],upgPos[1],w,h)
                         
-                       addUpgrade(currentPage,upg)
+                       //addUpgrade(currentPage,upg)
+                        
                         
                         
                        
@@ -1079,7 +1236,7 @@ window.addEventListener("load",function(){
         
         
     canvas.addEventListener("mousemove",function(e){
-        
+        //console.log(currentPage)
         camara.mousePos = {x:e.offsetX,y:e.offsetY}
         
         var on = false;

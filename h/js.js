@@ -113,7 +113,9 @@ upgrade.zIndex="-1";
     
 var upgradePos;
 
-upgrade.addEventListener("mouseover",function(){
+/*
+    
+    upgrade.addEventListener("mouseover",function(){
     console.log(upgradePos)
     var height = document.documentElement.offsetHeight;
     var width = document.documentElement.offsetWidth;
@@ -138,17 +140,41 @@ upgrade.addEventListener("mouseover",function(){
     
     
 })
+    */
     
-    upgrade.addEventListener("mouseleave",function(){
+    function enterTransition(){
+    var height = document.documentElement.offsetHeight;
+    var width = document.documentElement.offsetWidth;
+    
 
+    var upgradeMove = Number(upFrame.width);
+        
+        console.log(upgradeMove)
+        
+        console.log(upgrade.style)
+    
+    upgrade.style.right = (-upgradeMove-40)+"px";
+        
+        upScreen.style.height=upFrame.height+"px";
+    
+    var newWidth = upgradePos+upgradeMove;
+    if(newWidth>width){
+        var scaleFactor = width/newWidth;
+        
+        document.documentElement.style.transform="scale("+scaleFactor+","+scaleFactor+")"
+        
+       }
+    
+    
+    
+
+    }
+    
+    function leaveTransition(){
+            upgrade.style.right = -40+"px";
         document.documentElement.style.transform="scale(1,1)"
-        
-        
-       
-    
-    
-    
-})
+        upScreen.style.height="0px";
+    }
 
 var upScreen= document.createElement("div");
 upScreen.id="upscreen";
@@ -157,13 +183,20 @@ var upFrame = document.createElement("iframe");
     
 
     
-    upFrame.src = "https://comic-quest.github.io/mejora?p="+(variables.pageNumber||0);
+    upFrame.src = "https://comic-quest.github.io/mejora?p="+(variables.pageNumber||1);
     
     //upFrame.width = 381;
     
     //upFrame.height = 485;
     
     upFrame.id="upFrame";
+    
+    upgrade.addEventListener("mouseover",enterTransition)
+    
+    upgrade.addEventListener("mouseleave",leaveTransition)
+    
+    
+
     
     
     function changeIframeSize(w,h){
