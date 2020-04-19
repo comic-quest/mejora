@@ -1,34 +1,46 @@
-
+ 
 #upFrame{
-    
+   
 }
-
+ 
 #upgrade{
-    background-color: #EEEEEE;
+    background-color: #444444;
+    
     position:absolute;
     right:-40px;
     top:0px;
     width:50px;
     z-index:-1;
-    border-radius:7px; 
+    border-radius:7px;
     box-shadow: 1px 1px 0px  grey;
     transition: 1s ease-in-out;
-    
+
+background-image: url(https://i.imgur.com/t0xdjZR.png);
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-position-y: center;
+   
 }
 
+#upgrade p{
 
+display:none;
+
+}
+ 
+ 
 #upgrade:hover{
-    
-    right: -433px;
-    
+   
+    #right: -433px;
+   
 }
 #upgrade:hover #upscreen{
-    
-    height:400px;
-    
+   
+    #height:485px;
+   
 }
-
-
+ 
+ 
 #upgrade p{
     margin-top:auto;
     margin-bottom:auto;
@@ -38,11 +50,10 @@
     font-size: 50px;
     font-weight: bold;
 }
-
-
+ 
+ 
 #upscreen{
-    
-    
+height:0px;
     background-color:#EEEEEE;
     box-shadow: 0px 1px 0px  grey;
     position:absolute;
@@ -53,23 +64,34 @@
     overflow:hidden;
     transition:0.5s;
 }
-
-body{background-color:#111122}
-#main{background-color:#443344}
-#slide{background-color:#554455;z-index:1;}
+ 
+body{background-size:cover;background-image: url(https://i.imgur.com/C0NdZvm.png);background-color:#111122}
+#main{background-color:#44444}
+#slide{background-color:#555555;z-index:1;background-image:url(https://i.imgur.com/6wtKgsy.png);border:2px solid black}
 header{background-color:#FFFF00}
-.mspfalogo{background-color:#443344;border-color:#00FFFF}
+.mspfalogo{background-color:#333333;border-color:#00FFFF}
+header .mspfalogo {
+    background-size: 50%;
+    background-image: url(https://i.imgur.com/w07yTd2.gif);
+}
+.mspfalogo{border-color:#111111}
+footer .mspfalogo{background-image:url(https://i.imgur.com/1tgq3ma.gif)}
 .umcontainer{background-color:#FFFF00}
 .um{background-color:#99FF99}
 #command{background-color:#888888 !important; color:#FFFFFF}
-#content{background-color:#888888;overflow:hidden}
-#info span .spoiler.open{background-image: linear-gradient(to right, #443344 0%, #3C2255 7%, #3C2255 93%, #443344 100%);}
+#content{background-color:transparent;overflow:visible}
+#info span .spoiler.open{background-color: #555555;color:white;}
 #latestpages span div.spoiler.open{background-image: linear-gradient(to right, #3C2255 0%, #c3c3c3 1%, #c3c3c3 99%, #3C2255 100%) !important; border:2px black solid}
 html{filter: invert(0%);transition: transform 1s ease-in-out}
  
-nav {
- 
+#scriptvariables{
+    
+    display:none;
+    
 }
+
+
+
 nav a:nth-child(1) {
  
 font-size:0em;
@@ -84,7 +106,7 @@ text-align:center;
 text-decoration:underline;
 }
  
-
+.heart{visibility:hidden}
  
  
 nav a:nth-child(3) {
@@ -152,7 +174,7 @@ text-align:center;
 text-decoration:underline;
 }
  
-
+ 
  
 nav a:nth-child(13) {
  
@@ -170,7 +192,7 @@ text-decoration:underline;
 nav a:nth-child(15) {
  
 font-size:0em;
-text-decoration:none; 
+text-decoration:none;
 }
 nav a:nth-child(15):after {
   content:"MI MSPFA";
@@ -180,10 +202,24 @@ text-align:center;
 text-decoration:underline;
 }
  
+nav a:nth-last-child(5) {
+ 
+font-size:0em;
+text-decoration:none;
+}
+nav a:nth-last-child(5):after {
+  content:"DISCORD";
+    font-size: x-small;
+vertical-align:middle;
+text-align:center;
+text-decoration:underline;
+}
+ 
+ 
 nav a:nth-last-child(3) {
  
 font-size:0em;
-text-decoration:none; 
+text-decoration:none;
 }
 nav a:nth-last-child(3):after {
   content:"CONTACTO";
@@ -197,7 +233,7 @@ text-decoration:underline;
 nav a:nth-last-child(1) {
  
 font-size:0em;
-text-decoration:none; 
+text-decoration:none;
 }
 nav a:nth-last-child(1):after {
   content:"DONAR";
@@ -206,7 +242,11 @@ vertical-align:middle;
 text-align:center;
 text-decoration:underline;
 }
-
+ 
+nav a:link:after{color:red}
+ nav a:visited:after{color:red}
+ nav a:hover:after{color:darkred}
+ 
 a#savegame {
   font-size: 0em;
 }
@@ -215,7 +255,7 @@ a#savegame:after {
   content: 'Guardar partida';
   font-size: 11px;
 }
-
+ 
 a#loadgame {
   font-size: 0em;
 }
@@ -224,7 +264,7 @@ a#loadgame:after {
   content: 'Cargar partida';
   font-size: 11px;
 }
-
+ 
 a#deletegame {
   font-size: 0em;
 }
@@ -233,15 +273,25 @@ a#deletegame:after {
   content: 'Borrar datos de la partida';
   font-size: 11px;
 }
-
+ 
 #container{
-
+ 
 background-image: linear-gradient(to right, transparent 0%, #3C2255 7%, #3C2255 93%, transparent 100%);
+    background-image: url(https://imgur.com/cSrgGtH.png) !important;
+        background-size: 75% 100%;
     position:relative;
     z-index:0;
-    
+   
 }
-
-#foot a:link{color:white}
-
-#foot a:visited{color:red}
+ 
+p.box{
+ 
+-webkit-box-shadow: 0px 0px 13px 16px rgba(92,92,92,1);
+-moz-box-shadow: 0px 0px 13px 16px rgba(92,92,92,1);
+box-shadow: 0px 0px 13px 16px rgba(92,92,92,1);
+background-color: rgba(92,92,92,1);
+}
+ 
+a:link{color:red}
+ 
+a:visited{color:darkred}

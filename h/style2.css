@@ -15,18 +15,15 @@
     transition: 1s ease-in-out;
    
 }
+
+.noTransition{
+    
+    transition:none !important;
+    
+}
  
  
-#upgrade:hover{
-   
-    #right: -433px;
-   
-}
-#upgrade:hover #upscreen{
-   
-    height:485px;
-   
-}
+
  
  
 #upgrade p{

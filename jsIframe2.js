@@ -26,6 +26,75 @@ function pickRandomText(){
     return cqTexts[Math.floor(Math.random()*cqTexts.length)]
 }
 
+function swapAtributes(obj,prop){
+    
+    for(key in prop){
+        
+        obj[key] = prop[key]
+        
+    }
+    
+    
+}
+
+
+function UpgradeChanges(properties,swapper){
+    
+    this.properties = properties
+    
+    if(swapper){
+       this.swapAtributes = swapper
+       }else{
+           
+        this.swapAtributes = swapAtributes;
+           
+       }
+    
+    
+    
+}
+
+//0:puzles
+//1:premios
+//2:Tienda
+//3:Salas del Tesoro
+//4:Objetos
+//5:Nivel
+//6:Musica de combate
+//7:Salas
+//8:Pistas
+//9:Combate
+//10:CQ
+
+var presets = [];
+
+presets[0] = [];
+
+presets[0][0] = []
+
+presets[0][0][0] = new UpgradeChanges({locked:true});
+
+
+function setPreset(pIndex,pages){
+    
+    var preset = presets[pIndex]
+    
+    for(var i = 0; i<preset.length;i++){
+        
+        for(var j = 0;j<preset[i].length;j++){
+            
+            //console.log(pages[i].upgrades[j])
+            
+            preset[i][j].swapAtributes(pages[i].upgrades[j],preset[i][j].properties);
+            
+            //console.log(pages[i].upgrades[j])
+            
+        }
+        
+    }
+    
+}
+
 
 
 window.addEventListener("load",function(){
@@ -61,7 +130,9 @@ window.addEventListener("load",function(){
     if(urlParameters.p){
        
         
-        pageNumber = urlParameters.p
+        //pageNumber = urlParameters.p
+        
+        pageNumber = 0;
         
        }else{
            
@@ -77,7 +148,7 @@ window.addEventListener("load",function(){
     
     
     
-    console.log(pageNumber)
+    
     
     var canvas = document. getElementById("canvas");
     var ctx = canvas.getContext("2d");
@@ -439,7 +510,6 @@ Object.defineProperties(Mejora.prototype, {
                 
                 
             }
-            console.log("bruh");
             /*
             ctx.strokeStyle="red";
             ctx.strokeRect(x-3,y-3,w+3,Math.max(this.lines.length*spacing+3,h+3));
@@ -469,6 +539,18 @@ Object.defineProperties(Mejora.prototype, {
 
     upgradeArray.push([...mejoras])
     
+    for(var i = 0;i<mejoras.length;i++){
+        
+        if(mejoras[i].box){
+           
+            console.log(i,mejoras[i].box.text)
+            
+           }
+        
+        
+        
+    }
+    
     mejoras = parseUpgrades([{"x":312,"y":106,"w":54,"h":45,"text":"Colores primarios: \\n Añade el rojo, azul y verde a los paneles","color":"red","boxw":250,"boxh":72,"spacing":16},{"x":312,"y":224,"w":56,"h":51,"text":"¡Paneles animados!","color":"#ffffff","boxw":120,"boxh":40,"spacing":15},{"x":32,"y":225,"w":32,"h":28,"text":"Descripciones: \\n Examina los objetos y obtén una descripción detallada de sus características","color":"red","boxw":250,"boxh":115,"spacing":18},{"x":23,"y":175,"w":31,"h":30,"text":"Dialogos: \\n Entabla conversación con otros individuos","color":"red","boxw":160,"boxh":100,"spacing":18},{"x":92,"y":67,"w":54,"h":50,"text":"Fabrica de monedas: \\n Aumenta el número de monedas por página","color":"red","boxw":240,"boxh":85,"spacing":17,"maxLevel":5},{"x":187,"y":28,"w":55,"h":52,"text":"Intermedios: \\n Interrumpe la acción para ir a otro punto de la historia","color":"red","boxw":170,"boxh":120,"spacing":16},{"x":141,"y":143,"w":66,"h":93,"text":"CQ","color":"red","boxw":150,"boxh":90,"spacing":16},{"x":237,"y":152,"w":41,"h":71,"text":"Resolución: \\n Aumenta el tamaño de los paneles","color":"red","boxw":150,"boxh":80,"spacing":17,"maxLevel":3},{"x":396,"y":226,"w":54,"h":47,"text":"Flash: \\n ¡Desbloquea los videos!","color":"red","boxw":170,"boxh":60,"spacing":17},{"x":376,"y":113,"w":34,"h":28,"text":"Colores secundarios: \\n Añade el resto de colores a los paneles","color":"#ff0000","boxw":250,"boxh":80,"spacing":17}]);
     
     
@@ -487,6 +569,9 @@ Object.defineProperties(Mejora.prototype, {
         new Layer("fondos/mejoras-2-2.png",Math.PI/8,1,5,50)
         
     ]));
+    
+    
+    setPreset(0,paginas)
     
     //{"x":0,"y":0,"w":190.5,"h":40}
     var temp = new Mejora(0,0,190.5,40)
@@ -1001,7 +1086,7 @@ Object.defineProperties(Mejora.prototype, {
         function init(){ ///////////////////////////////////////////   init
             
             requestAnimationFrame(draw);
-            changePage(pageNumber);
+            changePage(0);
         
             if(debug){
                
@@ -1076,7 +1161,23 @@ Object.defineProperties(Mejora.prototype, {
 
                     ctx.globalCompositeOperation = "source-over"
                        
-                       }
+                       }else if(upg.locked){
+                                
+                                
+                           ctx.globalCompositeOperation = "multiply"
+                    
+                    ctx.fillStyle="rgb(50,50,50)";
+                    
+                    //ctx.fillRect(upg.x-3,upg.getPosition()-3,upg.w+3,upg.h+6)
+                           
+                           ctx.fillRect(upg.x-3,upg.getPosition()-3,upg.w+3,upg.h+6)
+                           
+                           //console.log(upg.)
+
+                    ctx.globalCompositeOperation = "source-over"
+                           
+                                //console.log("broh")
+                                }
                     
                 }
                 
