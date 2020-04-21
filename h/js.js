@@ -12,11 +12,14 @@ function getVariables() {
 
 
 
-
+console.log(elementvariables.innerHTML)
     var temp = elementvariables.innerHTML.split("<br>");
 
     temp = temp.join("");
-    temp = temp.split("\n");
+    temp = temp.split(";");
+    
+    
+    console.log(temp)
 
 
 
@@ -62,6 +65,8 @@ function code() { // this will basically add an element to the side of the panel
     var slide = document.getElementById("slide");
 
     var links = document.getElementById("links").children[0]
+    
+    var startover,goback;
 
     if (links) {
 
@@ -75,66 +80,91 @@ function code() { // this will basically add an element to the side of the panel
 
     function callback () { //when a link that changes the page is clicked, reset the upgrades iframe and check variables again
 
-        
+       
         var temp = variables.upgrades;
         
         variables = getVariables();
-        
+        console.log(variables)
         if(temp){
            unSetUpgrades();
            }
-        
-        
         if(variables.upgrades){
             var preset,coins;
             preset = variables.preset || 0;
             coins = variables.coins || 0;
+            console.log(preset,coins,variables)
            setUpgrades(preset,coins);
            }
+        setLinkEvents(false)
 
     }
 
-    function setLinkEvents() {
+    function setLinkEvents(n) {
         var linkArray = [];
         var temp;
-
+        links = document.getElementById("links").children[0]
+        //console.log(links,links.children)
         if (links) {
-            for (var i = 0; i < links.length; i++) {
-                if (links[0]) {
-                    linkArray.push(links[0]);
+            for (var i = 0; i < links.children.length; i++) {
+                if (links.children[i]) {
+                    //console.log("ATENCION ADFGDSFGHKIDSFH", links[i])
+                    linkArray.push(links.children[i]);
                 }
             }
 
 
         }
-
-        temp = document.getElementById("startover")
-
+        
+        if(!startover){
+            
+            temp = document.getElementById("startover")
+            
+        
+        
         if (temp) {
             linkArray.push(temp);
         }
-
-        temp = document.getElementById("goback");
-
-        if (temp) {
-            linkArray.push(temp);
+            startover = true
+            
+        }else{
+            startover = false;
         }
+        
+        if(!goback){
+           
+        var temp1 = document.getElementById("goback");
 
-        temp = document.getElementById("loadgame");
+        if (temp1) {
+            linkArray.push(temp1);
+        }
+            goback = true;
+        }else{
+            
+            goback = false;
+            
+        }
+        if(n){
+           var temp2 = document.getElementById("loadgame");
+           }
+        
 
-        if (temp) {
-            linkArray.push(temp);
+        if (temp2) {
+            linkArray.push(temp2);
         }
         
         for(var i = 0;i<linkArray.length;i++){
-            
+            console.log("link")
             linkArray[i].addEventListener("click",callback)
             
         }
+           
+           
+
+        
 
     }
 
-    setLinkEvents();
+    setLinkEvents(true);
 
 
 
@@ -276,7 +306,10 @@ function code() { // this will basically add an element to the side of the panel
     if (variables.upgrades) {
 
 
-        setUpgrades();
+        var preset,coins;
+            preset = variables.preset || 0;
+            coins = variables.coins || 0;
+           setUpgrades(preset,coins);
 
     }
 
