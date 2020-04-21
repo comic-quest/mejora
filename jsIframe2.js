@@ -329,7 +329,7 @@ window.addEventListener("load", function () {
                 this.level++
                 this.box.level = this.level;
                 
-                if(coins!==0){
+                if(coins<=0){
                    coins--
                    }
                 
