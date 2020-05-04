@@ -329,7 +329,7 @@ window.addEventListener("load", function () {
                 this.level++
                 this.box.level = this.level;
                 
-                if(coins<=0){
+                if(coins>0){
                    coins--
                    }
                 
@@ -1103,8 +1103,41 @@ window.addEventListener("load", function () {
     addPresetUpgrade(0, 0, 8, {
         locked: true
     });
+    
     addPresetUpgrade(0, 0, 9, {
         locked: true
+    });
+    addPresetUpgrade(0, 0, 10, {
+        locked: false,
+        click:function () {
+            
+            if(this.level<this.maxLevel && this.level<this.maxFunctionalLevel){
+               
+                this.level++
+                this.box.level = this.level;
+                
+                if(coins!==0){
+                   coins--
+                   }
+                
+                if(this.level === this.maxLevel){
+                   this.box.upgColor = "red";
+                    paginas[1].upgrades[6].click();
+                   }
+                
+                pointsToNext++
+                console.log(pointsToNext)
+                if(pointsToNext===maxPointsToNext){
+                   
+                    triggerNextPage();
+                    
+                   }
+                
+               }
+            
+            
+            
+        }
     });
     
     ////////////////////////////////////////////
@@ -1128,7 +1161,37 @@ window.addEventListener("load", function () {
         locked: true
     });
     addPresetUpgrade(0, 1, 6, {
-        locked: true
+        locked: false,
+        click:function () {
+            
+            if(this.level<this.maxLevel && this.level<this.maxFunctionalLevel){
+               
+                this.level++
+                this.box.level = this.level;
+                console.log(coins)
+                if(coins!==0){
+                   coins--
+                    console.log(coins)
+                   }
+                
+                if(this.level === this.maxLevel){
+                   this.box.upgColor = "red";
+                    paginas[0].upgrades[10].click();
+                   }
+                
+                pointsToNext++
+                console.log(pointsToNext)
+                if(pointsToNext===maxPointsToNext){
+                   
+                    triggerNextPage();
+                    
+                   }
+                
+               }
+            
+            
+            
+        }
     });
     addPresetUpgrade(0, 1, 7, {
         locked: true
@@ -1158,6 +1221,7 @@ window.addEventListener("load", function () {
         }
 
     }
+    
 
 
     function Layer(url, phase, speed, amplitude, height) {

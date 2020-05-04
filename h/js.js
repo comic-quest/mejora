@@ -1,7 +1,13 @@
-//console.log("?");
+//IM SORRY FOR THE SPAGUETTI CODE//
 
 
-var variables;
+
+
+
+function code() { // this will basically add an element to the side of the panel itself with an iframe inside. The iframe sends a message to activate the next page link.
+    //console.log("code");
+    
+    var variables;
 
 function getVariables() {
 
@@ -56,10 +62,6 @@ console.log(elementvariables.innerHTML)
 
 
 }
-
-
-function code() { // this will basically add an element to the side of the panel itself with an iframe inside. The iframe sends a message to activate the next page link.
-    //console.log("code");
 
 
     var slide = document.getElementById("slide");
@@ -290,6 +292,8 @@ function code() { // this will basically add an element to the side of the panel
         slide.appendChild(upgrade);
 
         upgradePos = upgrade.getBoundingClientRect().right;
+        
+        upScreen.style.height = 0;
         
         upFrame.src = "https://comic-quest.github.io/mejora?p=" +p+"&coins="+c;
 
