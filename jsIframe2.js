@@ -26,6 +26,14 @@ var maxPoints = [1,7,5,3]
 
 var pointsToNext = 0;
 
+var presetfunctions=[];
+
+presetfunctions[1]= function(upg){
+    
+    upg.box.computeLines();
+    
+}
+
 function pickRandomText() {
 
     return cqTexts[Math.floor(Math.random() * cqTexts.length)]
@@ -129,12 +137,15 @@ function setPreset(pIndex, pages) {
             if (preset[i][j]) {
 
                 preset[i][j].swapAtributes(pages[i].upgrades[j], preset[i][j].properties);
+                
+                pages[i].upgrades[j].updateLevel();
 
             }
 
         }
 
     }
+    
 
 }
 
@@ -366,6 +377,17 @@ window.addEventListener("load", function () {
             ctx.stroke();
 
 
+        }
+        
+        this.updateLevel = function(){
+            
+            if(this.box){
+                
+                this.box.level = this.level;
+                this.box.maxLevel = this.maxLevel;
+               
+               }
+            
         }
 
         this.getPosition = function () {
@@ -1242,8 +1264,7 @@ window.addEventListener("load", function () {
     });
     
     maxPointsToNext = maxPoints[urlParameters.p||0];
-    console.log(urlParameters.p)
-    setPreset(0, paginas)
+    setPreset(urlParameters.p||0, paginas)
 
     function startLoad() {
 
