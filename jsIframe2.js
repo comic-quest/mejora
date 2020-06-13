@@ -1140,6 +1140,44 @@ window.addEventListener("load", function () {
         }
     });
     
+        createPreset(paginas)
+    console.log(paginas)
+    addPresetUpgrade(0, 0, 0, {
+        locked: true
+    });
+    addPresetUpgrade(1, 0, 1, {
+        locked: true
+    });
+    addPresetUpgrade(1, 0, 2, {
+        locked: true
+    });
+    addPresetUpgrade(1, 0, 3, {
+        locked: true
+    });
+    addPresetUpgrade(1, 0, 4, {
+        locked: true
+    });
+    addPresetUpgrade(1, 0, 5, {
+        locked: true
+    });
+    addPresetUpgrade(1, 0, 6, {
+        locked: true
+    });
+    addPresetUpgrade(1, 0, 7, {
+        locked: true
+    });
+    addPresetUpgrade(1, 0, 8, {
+        locked: true
+    });
+    
+    addPresetUpgrade(1, 0, 9, {
+        locked: true
+    });
+    addPresetUpgrade(1, 0, 10, {
+        locked: false,
+        level:1
+    });
+    
     ////////////////////////////////////////////
     
     addPresetUpgrade(0, 1, 0, {
