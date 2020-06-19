@@ -30,7 +30,7 @@ var presetfunctions=[];
 
 var showLinkIndex = [];
 
-hideLinkIndex[1] = true;
+showLinkIndex[1] = true;
 
 presetfunctions[1]= function(upg){
     
