@@ -198,8 +198,9 @@ console.log(elementvariables.innerHTML)
 
 
     var mouseOnIframe;
-
+    var upgradesOpen = false;
     function enterTransition() { //move upgrade element into view
+        console.log("start")
         mouseOnIframe = true;
         var height = document.documentElement.offsetHeight;
         var width = document.documentElement.offsetWidth;
@@ -208,15 +209,18 @@ console.log(elementvariables.innerHTML)
         var upgradeMove = Number(upFrame.width);
 
 
-        upgrade.style.right = (-upgradeMove - 60) + "px";
+        upgrade.style.right = (-upgradeMove-52) + "px";
 
         upScreen.style.height = upFrame.height + "px";
 
         var newWidth = upgradePos + upgradeMove;
+        console.log(newWidth,width,upgradeMove,upgradePos)
         if (newWidth > width) {
-            var scaleFactor = width / newWidth;
+            var scaleFactor = width / (newWidth);
+            
+            var mainPos = document.getElementById("main").offsetLeft;
 
-            document.documentElement.style.transform = "scale(" + scaleFactor + "," + scaleFactor + ")"
+            document.documentElement.style.transform = "translate("+-(newWidth-width)/2+"px,0) scale(" + scaleFactor + "," + scaleFactor + ")"
 
         }
 
@@ -227,7 +231,7 @@ console.log(elementvariables.innerHTML)
 
     function leaveTransition() { //move up
         mouseOnIframe = false;
-        upgrade.style.right = -50 + "px";
+        upgrade.style.right = -40 + "px";
         document.documentElement.style.transform = "scale(1,1)"
         upScreen.style.height = "0px";
     } //
@@ -251,10 +255,28 @@ console.log(elementvariables.innerHTML)
 
     upFrame.id = "upFrame";
 
-    upgrade.addEventListener("mouseover", enterTransition)
 
-    upgrade.addEventListener("mouseleave", leaveTransition)
-
+    
+    upgrade.addEventListener("click",upgradeClick)
+    
+    function upgradeClick(e){  //ugh just kill me, this code is terrible
+        
+        if(e.target !== upgrade) return
+        
+        upgradesOpen = !upgradesOpen
+        
+        if(upgradesOpen){
+            
+            enterTransition();
+            
+        }else{
+            
+            leaveTransition();
+            
+        }
+        
+        
+    }
 
 
 
@@ -279,6 +301,10 @@ console.log(elementvariables.innerHTML)
         upgrade.offsetHeight;
 
         upgrade.classList.remove("noTransition")
+        
+        if(upgradesOpen){
+           enterTransition();
+           }
 
     }
 

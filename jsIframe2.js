@@ -28,6 +28,10 @@ var pointsToNext = 0;
 
 var presetfunctions=[];
 
+var showLinkIndex = [];
+
+hideLinkIndex[1] = true;
+
 presetfunctions[1]= function(upg){
     
     upg.box.computeLines();
@@ -152,9 +156,13 @@ function setPreset(pIndex, pages) {
 function triggerNextPage(){
     console.log("next")
    if (window.parent) {
-        window.parent.postMessage({
+       if(showLinkIndex[preset]){
+          window.parent.postMessage({
             name: "nextPage"
         }, "*")
+          
+          }
+        
         
         
     } 
@@ -165,17 +173,7 @@ function triggerNextPage(){
 
 window.addEventListener("load", function () {
 
-    var debug
-
-    if (window.self !== window.top) {
-        window.parent.postMessage({
-            name: "hideNext"
-        }, "*")
-        
-        debug = false;
-    } else {
-        debug = false;
-    }
+    
 
     var urlParameters = {}
 
@@ -214,6 +212,21 @@ window.addEventListener("load", function () {
         coins = 0;
     }
 
+    var debug
+
+    if (window.self !== window.top) {
+        if(!showLinkIndex[urlParameters.p]){
+            window.parent.postMessage({
+            name: "hideNext"
+        }, "*")
+           
+           }
+       
+        
+        debug = false;
+    } else {
+        debug = false;
+    }
 
 
 
@@ -1195,6 +1208,11 @@ window.addEventListener("load", function () {
     addPresetUpgrade(1, 0, 9, {
         locked: true
     });
+    addPresetUpgrade(1, 1, 6, {
+        locked: false,
+        level:1
+    });
+    
     addPresetUpgrade(1, 0, 10, {
         locked: false,
         level:1
