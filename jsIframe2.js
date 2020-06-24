@@ -1180,7 +1180,7 @@ window.addEventListener("load", function () {
     
         createPreset(paginas)
     console.log(paginas)
-    addPresetUpgrade(0, 0, 0, {
+    addPresetUpgrade(1, 0, 0, {
         locked: true
     });
     addPresetUpgrade(1, 0, 1, {
