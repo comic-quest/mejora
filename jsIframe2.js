@@ -1455,7 +1455,7 @@ window.addEventListener("load", function () {
 
         }
 
-    }
+    
 
 
     function DebugElement(upg, index) {
