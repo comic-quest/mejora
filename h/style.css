@@ -1,9 +1,10 @@
  
 #upFrame{
-   
+
 }
  
 #upgrade{
+    cursor:pointer;
     background-color: #444444;
     
     position:absolute;
@@ -20,6 +21,12 @@ background-image: url(https://i.imgur.com/t0xdjZR.png);
     background-position-x: right;
     background-position-y: center;
    
+}
+
+.noTransition{
+    
+    transition:none !important;
+    
 }
 
 #upgrade p{

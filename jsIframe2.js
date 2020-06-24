@@ -351,7 +351,7 @@ window.addEventListener("load", function () {
             if(this.level<this.maxLevel && this.level<this.maxFunctionalLevel){
                
                 this.level++
-                this.box.level = this.level;
+                this.updateLevel();
                 
                 if(coins>0){
                    coins--
@@ -368,6 +368,8 @@ window.addEventListener("load", function () {
                     triggerNextPage();
                     
                    }
+                
+                updateUpgrades();
                 
                }
             
@@ -1432,12 +1434,24 @@ window.addEventListener("load", function () {
             debugUpgradeElement = document.createElement("div");
 
             document.body.appendChild(debugUpgradeElement);
-
-            for (var i = 0; i < currentPage.upgrades.length; i++) {
-
-                debugUpgradeElement.appendChild(new DebugElement(currentPage.upgrades[i]).elem, i);
+            
+            for(var i = 0;i<paginas.length;i++){
+               
+                for (var j = 0; i < paginas[i].upgrades.length; i++) {
+                    
+                    if(paginas[i].upgrades[j].level < coins){
+                       
+                        paginas[i].upgrades[j].locked = true;
+                        
+                       }
 
             }
+                
+            }
+                
+            }
+
+            
 
         }
 
