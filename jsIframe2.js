@@ -1110,6 +1110,7 @@ window.addEventListener("load", function () {
     //8:Flash
     //9:Colores secundarios
 
+    
 
     createPreset(paginas)
     console.log(paginas)
