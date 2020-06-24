@@ -1221,6 +1221,36 @@ window.addEventListener("load", function () {
         level:1
     });
     
+    
+    addPresetUpgrade(1, 1, 0, {
+        locked: true
+    });
+    addPresetUpgrade(1, 1, 1, {
+        locked: true
+    });
+    addPresetUpgrade(1, 1, 2, {
+        locked: true
+    });
+    addPresetUpgrade(1, 1, 3, {
+        locked: true
+    });
+    addPresetUpgrade(1, 1, 4, {
+        locked: true
+    });
+    addPresetUpgrade(1, 1, 5, {
+        locked: true
+    });
+    addPresetUpgrade(1, 1, 7, {
+        locked: true
+    });
+    addPresetUpgrade(1, 1, 8, {
+        locked: true
+    });
+    
+    addPresetUpgrade(1, 1, 9, {
+        locked: true
+    });
+    
     ////////////////////////////////////////////
     
     addPresetUpgrade(0, 1, 0, {
