@@ -1439,7 +1439,7 @@ window.addEventListener("load", function () {
                
                 for (var j = 0; i < paginas[i].upgrades.length; i++) {
                     
-                    if(paginas[i].upgrades[j].level < coins){
+                    if(coins==0){
                        
                         paginas[i].upgrades[j].locked = true;
                         
