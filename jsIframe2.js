@@ -217,12 +217,12 @@ window.addEventListener("load", function () {
     function triggerNextPage(){
     console.log("next")
    if (window.parent) {
-       if(showLinkIndex[urlParameters.p]){
+       
           window.parent.postMessage({
             name: "nextPage"
         }, "*")
           
-          }
+          
         
         
         
