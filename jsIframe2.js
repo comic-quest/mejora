@@ -153,21 +153,7 @@ function setPreset(pIndex, pages) {
 
 }
 
-function triggerNextPage(){
-    console.log("next")
-   if (window.parent) {
-       if(showLinkIndex[preset]){
-          window.parent.postMessage({
-            name: "nextPage"
-        }, "*")
-          
-          }
-        
-        
-        
-    } 
-    
-}
+
 
 
 
@@ -227,6 +213,22 @@ window.addEventListener("load", function () {
     } else {
         debug = false;
     }
+    
+    function triggerNextPage(){
+    console.log("next")
+   if (window.parent) {
+       if(showLinkIndex[urlParameters.p]){
+          window.parent.postMessage({
+            name: "nextPage"
+        }, "*")
+          
+          }
+        
+        
+        
+    } 
+    
+}
 
 
 
@@ -329,24 +331,7 @@ window.addEventListener("load", function () {
         this.maxFunctionalLevel = this.maxLevel;
 
         this.click = function () {
-            /*
-            if (window.parent) {
-                window.parent.postMessage({
-                    name: "nextPage"
-                }, "*")
-                if (this.level < this.maxLevel) {
-                    this.level++
-                    this.box.level = this.level;
-                    if (this.level === this.maxLevel) {
-                        this.box.upgColor = "red";
-                    }
-                }
-
-
-                console.log("click!")
-            }
-            
-            */
+           
             
             if(this.level<this.maxLevel && this.level<this.maxFunctionalLevel){
                
@@ -1147,35 +1132,7 @@ window.addEventListener("load", function () {
     });
     addPresetUpgrade(0, 0, 10, {
         locked: false,
-        click:function () {
-            
-            if(this.level<this.maxLevel && this.level<this.maxFunctionalLevel){
-               
-                this.level++
-                this.box.level = this.level;
-                
-                if(coins!==0){
-                   coins--
-                   }
-                
-                if(this.level === this.maxLevel){
-                   this.box.upgColor = "red";
-                    paginas[1].upgrades[6].click();
-                   }
-                
-                pointsToNext++
-                console.log(pointsToNext)
-                if(pointsToNext===maxPointsToNext){
-                   
-                    triggerNextPage();
-                    
-                   }
-                
-               }
-            
-            
-            
-        }
+        
     });
     
         createPreset(paginas)
